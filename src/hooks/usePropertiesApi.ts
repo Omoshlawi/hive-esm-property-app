@@ -9,10 +9,11 @@ import {
 } from "../types";
 
 const addProperty = async (data: PropertyFormData) => {
-  return await apiFetch<Property>("/properties", {
+  const res = await apiFetch<Property>("/properties", {
     method: "POST",
     data,
   });
+  return res.data;
 };
 
 const updateProperty = async (
@@ -20,58 +21,90 @@ const updateProperty = async (
   data: PropertyFormData,
   method: "PUT" | "PATCH" = "PATCH"
 ) => {
-  return await apiFetch<Property>(`/properties/${id}`, {
+  const res = await apiFetch<Property>(`/properties/${id}`, {
     method: method,
     data,
   });
+  return res.data;
 };
 
 const deleteProperty = async (
   id: string,
   method: "DELETE" | "PURGE" = "DELETE"
 ) => {
-  return await apiFetch<Property>(`/properties/${id}`, {
+  const res = await apiFetch<Property>(`/properties/${id}`, {
     method: method,
   });
+  return res.data;
 };
 
-const addPropertyMedia = (propertyId: string, data: PropertyMediaFormData) =>
-  apiFetch<PropertyMedia>(`properties/${propertyId}/media`, {
+const addPropertyMedia = async (
+  propertyId: string,
+  data: PropertyMediaFormData
+) => {
+  const res = await apiFetch<PropertyMedia>(`properties/${propertyId}/media`, {
     method: "POST",
     data,
   });
+  return res.data;
+};
 
-const updatePropertyMedia = (
+const updatePropertyMedia = async (
   propertyId: string,
   mediaId: string,
   data: PropertyMediaFormData,
   method: "PUT" | "PATCH" = "PATCH"
-) =>
-  apiFetch<PropertyMedia>(`properties/${propertyId}/media/${mediaId}`, {
-    method,
-    data,
-  });
+) => {
+  const res = await apiFetch<PropertyMedia>(
+    `properties/${propertyId}/media/${mediaId}`,
+    {
+      method,
+      data,
+    }
+  );
+  return res.data;
+};
 
-const deletePropertyMedia = (
+const deletePropertyMedia = async (
   propertyId: string,
   mediaId: string,
   method: "DELETE" | "PURGE" = "DELETE"
-) => apiFetch(`properties/${propertyId}/media/${mediaId}`, { method });
-
-const searchProperty = (filters: Record<string, any>) => {
-  const url = constructUrl(`/properties`, filters);
-  return apiFetch<{ results: Array<Property> }>(url);
+) => {
+  const res = await apiFetch<PropertyMedia>(
+    `properties/${propertyId}/media/${mediaId}`,
+    {
+      method,
+    }
+  );
+  return res.data;
 };
 
-const addPropertiesRelationship = (data: PropertyRelationshipFormData) =>
-  apiFetch<Relationship>(`/relationships`, { method: "POST", data });
-const updatePropertiesRelationship = (
+const searchProperty = async (filters: Record<string, any>) => {
+  const url = constructUrl(`/properties`, filters);
+  const res = await apiFetch<{ results: Array<Property> }>(url);
+  return res.data.results ?? [];
+};
+
+const addPropertiesRelationship = async (
+  data: PropertyRelationshipFormData
+) => {
+  const res = await apiFetch<Relationship>(`/relationships`, {
+    method: "POST",
+    data,
+  });
+  return res.data;
+};
+const updatePropertiesRelationship = async (
   relationshipId: string,
   data: PropertyRelationshipFormData,
   method: "PUT" | "PATCH" = "PATCH"
-) =>
-  apiFetch<Relationship>(`/relationships/${relationshipId}`, { method, data });
-
+) => {
+  const res = await apiFetch<Relationship>(`/relationships/${relationshipId}`, {
+    method,
+    data,
+  });
+  return res.data;
+};
 const usePropertiesApi = () => {
   return {
     addProperty,

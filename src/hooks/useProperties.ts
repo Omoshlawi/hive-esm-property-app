@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { Property, PropertyMedia } from "../types";
 import { APIFetchResponse, constructUrl, useSession } from "@hive/esm-core-api";
 
-const useProperties = (params?: Record<string, any>) => {
+export const useProperties = (params?: Record<string, any>) => {
   const session = useSession();
   const path = constructUrl("/properties", {
     organizationContext: session.currentOrganization,
@@ -45,4 +45,3 @@ export const usePropertyMedia = (propertyId: string) => {
   };
 };
 
-export default useProperties;

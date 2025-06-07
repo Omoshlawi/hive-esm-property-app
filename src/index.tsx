@@ -1,10 +1,23 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import type { PiletApi } from '@hive/esm-shell-app';
-
-const Page = React.lazy(() => import('./Page'));
+import * as React from "react";
+import type { PiletApi } from "@hive/esm-shell-app";
+import { PropertiesDashboard } from "./pages";
+import { HeaderLink } from "@hive/esm-core-components";
 
 export function setup(app: PiletApi) {
-  app.registerPage('/page', Page);
-  app.registerMenu(() => <Link to="/page">Page</Link>);
+  app.registerPage(
+    "/dashboard/properties",
+    () => <PropertiesDashboard launchWorkspace={app.launchWorkspace} />,
+    { layout: "dashboard" }
+  );
+  app.registerMenu(
+    ({ onClose }: any) => (
+      <HeaderLink
+        label="Properties"
+        to="/dashboard/properties"
+        icon="building"
+        onClose={onClose ?? (() => {})}
+      />
+    ),
+    { type: "admin" }
+  );
 }

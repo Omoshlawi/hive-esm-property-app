@@ -49,7 +49,9 @@
     "inherit": [
       "@hive/esm-shell-app"
     ],
-    "imports": {}
+    "imports": {
+      "@hookform/resolvers/zod": "@hookform/resolvers/zod"
+    }
   },
   "source": "src/index.tsx"
 }
