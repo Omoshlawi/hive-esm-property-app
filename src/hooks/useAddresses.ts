@@ -1,11 +1,6 @@
-import {
-  apiFetch,
-  APIFetchResponse,
-  constructUrl,
-  useSession,
-} from "@hive/esm-core-api";
-import { Address, AddressFormData, County } from "../types";
+import { APIFetchResponse, constructUrl, useSession } from "@hive/esm-core-api";
 import useSWR from "swr";
+import { Address, County } from "../types";
 
 export const useAddresses = (filters: Record<string, any>) => {
   const session = useSession();
@@ -35,37 +30,5 @@ export const usePlaces = (filters: Record<string, any>) => {
     isLoading,
     error,
     mutate,
-  };
-};
-
-const addAddress = async (data: AddressFormData) => {
-  return await apiFetch<Address>("/addresses", { method: "POST", data });
-};
-
-const updateAddress = async (
-  id: string,
-  data: AddressFormData,
-  method: "PUT" | "PATCH" = "PUT"
-) => {
-  return await apiFetch<Address>(`/addresses/${id}`, {
-    method: method,
-    data,
-  });
-};
-
-const deleteAddress = async (
-  id: string,
-  method: "DELETE" | "PURGE" = "DELETE"
-) => {
-  return await apiFetch<Address>(`/addresses/${id}`, {
-    method: method,
-  });
-};
-
-export const useAddressApi = () => {
-  return {
-    addAddress,
-    updateAddress,
-    deleteAddress,
   };
 };

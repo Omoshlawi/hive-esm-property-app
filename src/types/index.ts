@@ -167,3 +167,36 @@ export interface Attribute {
   updatedAt: string;
   attribute?: AttributeType;
 }
+
+export interface County {
+  code: string;
+  name: string;
+  capital: string;
+  metadata: any;
+  voided: boolean;
+  createdAt: string;
+  updatedAt: string;
+  subCounties: SubCounty[];
+}
+
+export interface SubCounty {
+  code: string;
+  name: string;
+  countyCode: string;
+  metadata: any;
+  voided: boolean;
+  createdAt: string;
+  updatedAt: string;
+  wards: Ward[];
+}
+
+export interface Ward {
+  code: string;
+  name: string;
+  countyCode: string;
+  subCountyCode: string;
+  metadata: any;
+  voided: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

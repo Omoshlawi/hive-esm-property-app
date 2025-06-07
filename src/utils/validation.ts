@@ -19,7 +19,7 @@ export const PropertyMediaSchema = z.object({
 
 // Property
 export const PropertySchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, "Required"),
   description: z.string().optional(),
   thumbnail: z.string().optional(),
   attributes: z
