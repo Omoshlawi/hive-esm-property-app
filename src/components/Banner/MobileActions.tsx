@@ -8,17 +8,20 @@ import {
   IconShare,
   IconArchive,
   IconTrash,
+  IconDotsVertical,
 } from "@tabler/icons-react";
 import React, { FC } from "react";
 
 type MobileActionsProps = {
   expanded: boolean;
   onToggleExpand: () => void;
+  Extension: React.ComponentType<{ name: string; params: Record<string, any> }>;
 };
 
 const MobileActions: FC<MobileActionsProps> = ({
   expanded,
   onToggleExpand,
+  Extension,
 }) => {
   return (
     <Group gap="xs" hiddenFrom="sm" style={{ flexShrink: 0 }}>
@@ -43,32 +46,14 @@ const MobileActions: FC<MobileActionsProps> = ({
       <Menu shadow="lg" width={220} position="bottom-end">
         <Menu.Target>
           <ActionIcon variant="light" size="lg">
-            <IconDots size={16} />
+            <IconDotsVertical size={16} />
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Label>Quick Actions</Menu.Label>
-          <Menu.Item leftSection={<IconEye size={16} />}>
-            View Details
-          </Menu.Item>
-          <Menu.Item leftSection={<IconEdit size={16} />}>
-            Edit Property
-          </Menu.Item>
-
-          <Menu.Label>Share & Export</Menu.Label>
-          <Menu.Item leftSection={<IconCopy size={16} />}>Copy Link</Menu.Item>
-          <Menu.Item leftSection={<IconShare size={16} />}>
-            Share Property
-          </Menu.Item>
-
-          <Menu.Divider />
-          <Menu.Label>Manage</Menu.Label>
-          <Menu.Item leftSection={<IconArchive size={16} />}>
-            Archive Property
-          </Menu.Item>
-          <Menu.Item leftSection={<IconTrash size={16} />} color="red">
-            Delete Property
-          </Menu.Item>
+          <Extension
+            name="property-chart-banner-actions-extension-slot"
+            params={{}}
+          />
         </Menu.Dropdown>
       </Menu>
     </Group>

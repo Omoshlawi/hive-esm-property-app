@@ -31,6 +31,7 @@ import MobileActions from "./MobileActions";
 
 interface PropertyBannerProps {
   propertyId: string;
+  Extension: React.ComponentType<{ name: string; params: Record<string, any> }>;
 }
 
 // Enhanced status color mapping with better visual hierarchy
@@ -74,7 +75,10 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export function PropertyChartBanner({ propertyId }: PropertyBannerProps) {
+export function PropertyChartBanner({
+  propertyId,
+  Extension,
+}: PropertyBannerProps) {
   const propertyAsync = useProperty(propertyId);
   const theme = useMantineTheme();
   const colorScheme = useComputedColorScheme();
@@ -215,10 +219,18 @@ export function PropertyChartBanner({ propertyId }: PropertyBannerProps) {
               </Group>
 
               {/* Desktop Actions */}
-              <DesktopActions expanded={expanded} onTogleExpand={toggle} />
+              <DesktopActions
+                expanded={expanded}
+                onTogleExpand={toggle}
+                Extension={Extension}
+              />
 
               {/* Mobile Actions */}
-              <MobileActions expanded={expanded} onToggleExpand={toggle} />
+              <MobileActions
+                expanded={expanded}
+                onToggleExpand={toggle}
+                Extension={Extension}
+              />
             </Group>
             {/* Enhanced Expandable Content */}
             {/* TODO Throws an error `If you want to write it to the DOM, pass a string instead: inert="true" or inert={value.toString()}`.the issue is in the Colapse component, try removing even children, still throws error */}

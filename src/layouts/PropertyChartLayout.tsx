@@ -52,7 +52,7 @@ const PropertyChartLayout: React.FC<PropertyChartLayoutProps> = ({
                 <Stack gap="xl">
                   <Extension
                     name="property-chart-banner-extension-slot"
-                    params={{ propertyId }}
+                    params={{ propertyId, Extension }}
                   />
                   <Box>{children}</Box>
                 </Stack>
