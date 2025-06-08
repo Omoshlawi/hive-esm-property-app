@@ -1,9 +1,14 @@
-import * as React from "react";
-import type { PiletApi } from "@hive/esm-shell-app";
-import { PropertiesDashboard, PropertyDetail } from "./pages";
 import { HeaderLink } from "@hive/esm-core-components";
-import PropertyChartLayout from "./pages/layouts/PropertyChartLayout";
-import { AppShell } from "@mantine/core";
+import type { PiletApi } from "@hive/esm-shell-app";
+import * as React from "react";
+import { useChartCurrentProperty } from "./hooks";
+import { PropertyChartLayout } from "./layouts";
+import {
+  PropertiesDashboard,
+  PropertyDetail,
+  PropertyMedia,
+  PropertyRelationships,
+} from "./pages";
 
 export function setup(app: PiletApi) {
   app.registerPageLayout("propertyChart", ({ children }) => (
@@ -21,6 +26,16 @@ export function setup(app: PiletApi) {
     () => <PropertyDetail launchWorkspace={app.launchWorkspace} />,
     { layout: "propertyChart" }
   );
+  app.registerPage(
+    "/dashboard/properties/:propertyId/relationships",
+    () => <PropertyRelationships launchWorkspace={app.launchWorkspace} />,
+    { layout: "propertyChart" }
+  );
+  app.registerPage(
+    "/dashboard/properties/:propertyId/media",
+    () => <PropertyMedia launchWorkspace={app.launchWorkspace} />,
+    { layout: "propertyChart" }
+  );
   app.registerMenu(
     ({ onClose }: any) => (
       <HeaderLink
@@ -33,14 +48,44 @@ export function setup(app: PiletApi) {
     { type: "admin" }
   );
   app.registerMenu(
-    ({ onClose }: any) => (
-      <HeaderLink
-        label="Relationships"
-        to="relationships"
-        icon="building"
-        onClose={onClose ?? (() => {})}
-      />
-    ),
+    ({ onClose }: any) => {
+      const id = useChartCurrentProperty();
+      return (
+        <HeaderLink
+          label={"Summary"}
+          to={`/dashboard/properties/${id}`}
+          onClose={onClose ?? (() => {})}
+          activeWhen={(currpath) => currpath === `/dashboard/properties/${id}`}
+        />
+      );
+    },
+    { type: "propertyChart" as any }
+  );
+  app.registerMenu(
+    ({ onClose }: any) => {
+      const id = useChartCurrentProperty();
+      return (
+        <HeaderLink
+          label="Relationships"
+          to={`/dashboard/properties/${id}/relationships`}
+          onClose={onClose ?? (() => {})}
+        />
+      );
+    },
+    { type: "propertyChart" as any }
+  );
+  app.registerMenu(
+    ({ onClose }: any) => {
+      const id = useChartCurrentProperty();
+
+      return (
+        <HeaderLink
+          label="Media"
+          to={`/dashboard/properties/${id}/media`}
+          onClose={onClose ?? (() => {})}
+        />
+      );
+    },
     { type: "propertyChart" as any }
   );
 }
