@@ -15,9 +15,6 @@ type BannerloadingSkeletonProps = {};
 const BannerloadingSkeleton: React.FC<BannerloadingSkeletonProps> = ({}) => {
   const theme = useMantineTheme();
   const colorScheme = useComputedColorScheme();
-  const getBorderColor = () => {
-    return colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3];
-  };
 
   const getBannerBackground = () => {
     if (colorScheme === "dark") {
@@ -35,9 +32,6 @@ const BannerloadingSkeleton: React.FC<BannerloadingSkeletonProps> = ({}) => {
         mb={0}
         style={{
           background: getBannerBackground(),
-          borderEndEndRadius: 0,
-          borderEndStartRadius: 0,
-          border: `1px solid ${getBorderColor()}`,
         }}
       >
         <Group justify="space-between" align="flex-start">
@@ -60,7 +54,7 @@ const BannerloadingSkeleton: React.FC<BannerloadingSkeletonProps> = ({}) => {
           </Group>
         </Group>
       </Paper>
-      <Divider color={getBorderColor()} />
+      <Divider />
     </Box>
   );
 };

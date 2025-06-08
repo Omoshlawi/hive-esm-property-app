@@ -1,15 +1,5 @@
-import { Group, Tooltip, ActionIcon, Menu } from "@mantine/core";
-import {
-  IconChevronDown,
-  IconDots,
-  IconEye,
-  IconEdit,
-  IconCopy,
-  IconShare,
-  IconArchive,
-  IconTrash,
-  IconDotsVertical,
-} from "@tabler/icons-react";
+import { ActionIcon, Group, Menu, Tooltip } from "@mantine/core";
+import { IconChevronDown, IconDotsVertical } from "@tabler/icons-react";
 import React, { FC } from "react";
 
 type MobileActionsProps = {

@@ -101,10 +101,6 @@ export function PropertyChartBanner({
     return type === "primary" ? theme.colors.gray[9] : theme.colors.gray[6];
   };
 
-  const getBorderColor = () => {
-    return colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3];
-  };
-
   return (
     <When
       asyncState={{
@@ -130,11 +126,9 @@ export function PropertyChartBanner({
           <Paper
             p="md"
             mb={0}
+            withBorder={false}
             style={{
               background: getBannerBackground(),
-              borderEndEndRadius: 0,
-              borderEndStartRadius: 0,
-              border: `1px solid ${getBorderColor()}`,
               transition: "all 0.2s ease",
             }}
           >
@@ -238,7 +232,7 @@ export function PropertyChartBanner({
               <BannerExpandedSection property={property} />
             </Collapse>
           </Paper>
-          <Divider color={getBorderColor()} />
+          <Divider />
         </Box>
       )}
     />

@@ -1,15 +1,5 @@
-import { Group, Menu, Button, Tooltip, ActionIcon } from "@mantine/core";
-import {
-  IconDots,
-  IconEye,
-  IconEdit,
-  IconCopy,
-  IconShare,
-  IconArchive,
-  IconTrash,
-  IconChevronDown,
-  IconDotsVertical,
-} from "@tabler/icons-react";
+import { ActionIcon, Button, Group, Menu, Tooltip } from "@mantine/core";
+import { IconChevronDown, IconDotsVertical } from "@tabler/icons-react";
 import React, { FC } from "react";
 
 type DesktopActionsProps = {
