@@ -1,6 +1,7 @@
 import { HeaderLink } from "@hive/esm-core-components";
 import type { PiletApi } from "@hive/esm-shell-app";
 import * as React from "react";
+import { PropertyChartBanner } from "./components";
 import { useChartCurrentProperty } from "./hooks";
 import { PropertyChartLayout } from "./layouts";
 import {
@@ -87,5 +88,9 @@ export function setup(app: PiletApi) {
       );
     },
     { type: "propertyChart" as any }
+  );
+  app.registerExtension(
+    "property-chart-banner-extension-slot",
+    ({ params }) => <PropertyChartBanner {...params} />
   );
 }

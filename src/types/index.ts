@@ -59,6 +59,7 @@ export interface Property {
   categories?: PropertyCategory[];
   amenities?: PropertyAmenity[];
   attributes?: Attribute[];
+  status: "Draft" | "Published";
 }
 export interface RelationshipType {
   id: string;

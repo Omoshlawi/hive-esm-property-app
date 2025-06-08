@@ -113,51 +113,6 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
           <DataTable
             data={data}
             columns={[...columns, actions]}
-            renderExpandedRow={(row) => {
-              const property = row.original;
-              return (
-                <Paper p={"md"}>
-                  <Stack>
-                    <Stack gap={"xs"}>
-                      <Title order={6}>Description</Title>
-                      <Text c="dimmed">
-                        {property.description || "No description"}
-                      </Text>
-                    </Stack>
-                    <Stack gap={"xs"}>
-                      <Title order={6}>Amenities</Title>
-                      <Pill.Group>
-                        {property.amenities.map((amenity) => (
-                          <Pill key={amenity.id} variant="default">
-                            {amenity.amenity.name}
-                          </Pill>
-                        ))}
-                      </Pill.Group>
-                    </Stack>
-                    <Stack gap={"xs"}>
-                      <Title order={6}>Category</Title>
-                      <Pill.Group>
-                        {property.categories.map((category) => (
-                          <Pill key={category.id} variant="default">
-                            {category.category.name}
-                          </Pill>
-                        ))}
-                      </Pill.Group>
-                    </Stack>
-                    <Stack gap={"xs"}>
-                      <Title order={6}>Attributes</Title>
-                      <Pill.Group>
-                        {property.attributes.map((attr) => (
-                          <Pill key={attr.id} variant="default">
-                            {attr.attribute.name}: {attr.value}
-                          </Pill>
-                        ))}
-                      </Pill.Group>
-                    </Stack>
-                  </Stack>
-                </Paper>
-              );
-            }}
             renderActions={() => (
               <>
                 <Button
@@ -181,52 +136,12 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
 export default PropertiesPage;
 const columns: ColumnDef<Property>[] = [
   {
-    id: "expand",
-    header: ({ table }) => {
-      const allRowsExpanded = table.getIsAllRowsExpanded();
-      //   const someRowsExpanded = table.getIsSomeRowsExpanded();
-      return (
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          onClick={() => table.toggleAllRowsExpanded(!allRowsExpanded)}
-          style={{ cursor: "pointer" }}
-          aria-label="Expand all"
-        >
-          <TablerIcon
-            name={allRowsExpanded ? "chevronUp" : "chevronDown"}
-            size={16}
-          />
-        </ActionIcon>
-      );
-    },
-    cell: ({ row }) => {
-      const rowExpanded = row.getIsExpanded();
-      return (
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          onClick={() => row.toggleExpanded(!rowExpanded)}
-          style={{ cursor: "pointer" }}
-          aria-label="Expand Row"
-        >
-          <TablerIcon
-            name={rowExpanded ? "chevronUp" : "chevronDown"}
-            size={16}
-          />
-        </ActionIcon>
-      );
-    },
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "name",
     header: "Property",
     cell({ row, getValue }) {
       const property = row.original;
       const propertyName = getValue<string>();
-      const linkToChart = `properties/${property.id}`;
+      const linkToChart = `/dashboard/properties/${property.id}`;
       return (
         <Button
           component={Link}

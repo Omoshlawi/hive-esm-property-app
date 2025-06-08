@@ -6,7 +6,6 @@ export const useProperties = (params?: Record<string, any>) => {
   const session = useSession();
   const path = constructUrl("/properties", {
     organizationContext: session.currentOrganization,
-    v: "custom:include(categories:include(category),amenities:include(amenity),attributes:include(attribute))",
   });
   const { data, error, isLoading, mutate } =
     useSWR<APIFetchResponse<{ results: Property[] }>>(path);
