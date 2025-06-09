@@ -1,44 +1,36 @@
+import { EmptyState, ErrorState, When } from "@hive/esm-core-components";
 import { PiletApi } from "@hive/esm-shell-app";
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useProperty } from "../hooks";
 import {
   ActionIcon,
   Avatar,
   Badge,
-  Button,
   Card,
-  Code,
   Divider,
   Grid,
   Group,
+  Image,
   Loader,
   RingProgress,
   SimpleGrid,
   Stack,
-  ThemeIcon,
-  Timeline,
   Text,
-  Image,
+  ThemeIcon,
+  Timeline
 } from "@mantine/core";
-import { EmptyState, ErrorState, When } from "@hive/esm-core-components";
 import {
-  IconEdit,
-  IconShare,
   IconBuilding,
-  IconCurrency,
-  IconRuler,
-  IconMapPin,
-  IconHome,
   IconCalendar,
-  IconUser,
-  IconEye,
-  IconPhoto,
-  IconTag,
-  IconChartBar,
   IconCheck,
   IconClock,
+  IconEdit,
+  IconHome,
+  IconMapPin,
+  IconShare,
+  IconUser
 } from "@tabler/icons-react";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useProperty } from "../hooks";
 
 type PropertyDetailPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({

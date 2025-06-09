@@ -969,11 +969,11 @@
 
 "@hive/esm-core-components@../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz":
   version "1.0.0"
-  resolved "../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz#e37a6717d31c55c388bef94a235853f49b7e8ccf"
+  resolved "../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz#e9b61892fb89dca6259c6fe23decc3be250d586d"
 
 "@hive/esm-shell-app@../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz":
   version "1.0.0"
-  resolved "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz#fd08b0959774d6a5451ded2e1c5bd7416af9c3d7"
+  resolved "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz#fb95949b38aabaa8bccafaddb5c539e01e7e1b03"
 
 "@hookform/resolvers@5.0.1":
   version "5.0.1"
@@ -1315,7 +1315,7 @@ braces@^3.0.3, braces@~3.0.2:
   dependencies:
     fill-range "^7.1.1"
 
-browserslist@^4.24.0, browserslist@^4.24.4:
+browserslist@^4.24.0, browserslist@^4.25.0:
   version "4.25.0"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.25.0.tgz#986aa9c6d87916885da2b50d8eb577ac8d133b2c"
   integrity sha512-PJ8gYKeS5e/whHBh8xrwYK+dAvEj7JXtz6uTucnMRB8OiGTsKccFekoRrjajPBHV8oOY+2tI4uxeceSimKwMFA==
@@ -1445,11 +1445,11 @@ convert-source-map@^2.0.0:
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
 core-js-compat@^3.40.0:
-  version "3.42.0"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.42.0.tgz#ce19c29706ee5806e26d3cb3c542d4cfc0ed51bb"
-  integrity sha512-bQasjMfyDGyaeWKBIu33lHh9qlSR0MFE/Nmc6nMjf/iU9b3rSMdAYz1Baxrv4lPdGUsTqZudHA4jIGSJy0SWZQ==
+  version "3.43.0"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.43.0.tgz#055587369c458795ef316f65e0aabb808fb15840"
+  integrity sha512-2GML2ZsCc5LR7hZYz4AXmjQw8zuy2T//2QntwdnpuYI7jteT6GVYJL7F6C2C57R7gSYrcqVW3lAALefdbhBLDA==
   dependencies:
-    browserslist "^4.24.4"
+    browserslist "^4.25.0"
 
 css-conflict-inspector@^0.2:
   version "0.2.1"
