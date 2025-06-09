@@ -4,6 +4,6 @@ export { default as useRelationshipTypes } from "./useRelationshipTypes";
 export { default as useAmenities } from "./useAmenities";
 export * from "./useAddresses";
 export * from "./useProperties";
-export { default as usePropertiesApi } from "./usePropertiesApi";
-export { default as useRelationships } from "./useRelationships";
+export * from "./usePropertiesApi";
+export * from "./useRelationships";
 export { default as useChartCurrentProperty } from "./useChartCurrentProperty";

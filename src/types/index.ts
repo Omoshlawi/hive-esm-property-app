@@ -201,3 +201,8 @@ export interface Ward {
   createdAt: string;
   updatedAt: string;
 }
+
+export type RelatedProperty = Property & {
+  relationshipType: string;
+  relationship: Relationship;
+};

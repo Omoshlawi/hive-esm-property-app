@@ -1,4 +1,9 @@
-import { apiFetch, constructUrl } from "@hive/esm-core-api";
+import {
+  apiFetch,
+  APIFetchResponse,
+  constructUrl,
+  debounce,
+} from "@hive/esm-core-api";
 import {
   Property,
   PropertyFormData,
@@ -7,6 +12,8 @@ import {
   PropertyRelationshipFormData,
   Relationship,
 } from "../types";
+import { useState } from "react";
+import useSWR from "swr";
 
 const addProperty = async (data: PropertyFormData) => {
   const res = await apiFetch<Property>("/properties", {
@@ -105,7 +112,7 @@ const updatePropertiesRelationship = async (
   });
   return res.data;
 };
-const usePropertiesApi = () => {
+export const usePropertiesApi = () => {
   return {
     addProperty,
     updateProperty,
@@ -119,4 +126,18 @@ const usePropertiesApi = () => {
   };
 };
 
-export default usePropertiesApi;
+export const useFilteredProperties = () => {
+  const [filters, setFilters] = useState<Record<string, any>>({});
+  const url = constructUrl(`/properties`, filters);
+
+  const { data, error, isLoading } = useSWR<
+    APIFetchResponse<{ results: Array<Property> }>
+  >(Object.keys(filters ?? {}).length > 0 ? url : null);
+  return {
+    isLoading,
+    error,
+    properties: data?.data?.results ?? [],
+    setFilters: debounce(setFilters, 500),
+    filters,
+  };
+};
