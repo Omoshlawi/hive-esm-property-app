@@ -64,7 +64,7 @@ const PropertyChartLayout: React.FC<PropertyChartLayoutProps> = ({
           );
         },
         asideExtentensionSlot: "aside-extension-slot",
-        withAside: true,
+        withAside: false,
         withSideNav: true,
       }}
     />
