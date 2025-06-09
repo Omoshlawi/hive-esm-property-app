@@ -31,14 +31,14 @@ export const useRelatedProperties = (propertyId: string) => {
       let relatedProperty: RelatedProperty;
       if (isCurrentA) {
         relatedProperty = {
-          ...rel.propertyB,
-          relationshipType: rel.type.bIsToA,
+          name: rel.propertyB.name,
+          relationshipToIndex: `${rel.type.bIsToA} ${rel.propertyA.name}`,
           relationship: rel,
         };
       } else {
         relatedProperty = {
-          ...rel.propertyA,
-          relationshipType: rel.type.aIsToB,
+          name: rel.propertyA.name,
+          relationshipToIndex: `${rel.type.aIsToB} ${rel.propertyB.name}`,
           relationship: rel,
         };
       }

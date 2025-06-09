@@ -159,7 +159,7 @@ const columns: ColumnDef<RelatedProperty>[] = [
     },
   },
   {
-    accessorKey: "relationshipType",
+    accessorKey: "relationshipToIndex",
     header({ column }) {
       return (
         <DataTableColumnHeader column={column} title="Relationship Type" />
