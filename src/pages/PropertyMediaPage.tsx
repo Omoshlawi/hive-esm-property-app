@@ -4,13 +4,23 @@ import {
   TablerIcon,
 } from "@hive/esm-core-components";
 import { PiletApi } from "@hive/esm-shell-app";
-import { ActionIcon, Avatar, Button, Center, Paper } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Button,
+  Center,
+  Image,
+  Paper,
+} from "@mantine/core";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { usePropertyMedia } from "../hooks";
 import { PropertyMedia } from "../types";
 import { IconTrash } from "@tabler/icons-react";
+import { getHiveFileUrl } from "@hive/esm-core-api";
+import { openModal } from "@mantine/modals";
+import MediaGridView from "../components/MediaGridView";
 type PropertyMediaPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 
 const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
@@ -37,11 +47,7 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
       )}
       renderExpandedRow={() => <Paper>Here</Paper>}
       views={{
-        grid: (table) => (
-          <Paper p={"xl"}>
-            <pre>{JSON.stringify(table.options.data, null, 2)}</pre>
-          </Paper>
-        ),
+        grid: (table) => <MediaGridView media={table.options.data} />,
       }}
       renderViewTabItem={(view) => {
         if (view === "table")
@@ -106,14 +112,28 @@ const columns: ColumnDef<PropertyMedia>[] = [
   {
     accessorKey: "url",
     header: "Image",
-    cell({ getValue }) {
-      const url = getValue();
+    cell({ getValue, row }) {
+      const url = getValue<string>();
+      const media = row.original;
+      const img = getHiveFileUrl(url);
       return (
         <Avatar
-          alt="it's me"
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-7.png"
-          // radius={"xl"}
-          // size={"lg"}
+          alt="Property media"
+          src={img}
+          radius={"xl"}
+          onClick={() => {
+            openModal({
+              fullScreen: true,
+              title: media.title ?? "Media File",
+              children: (
+                <Image
+                  src={img}
+                  fit="contain"
+                  fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                />
+              ),
+            });
+          }}
         />
       );
     },
