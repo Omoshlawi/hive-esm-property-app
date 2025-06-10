@@ -70,6 +70,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
         : await addProperty(data);
 
       onSuccess?.(_property);
+      onCloseWorkspace?.();
       showNotification({
         title: "success",
         message: `Property ${property ? "updated" : "created"} successfully`,
@@ -238,7 +239,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                 />
               )}
             />
-            <PropertyAttributesForm/>
+            <PropertyAttributesForm />
           </Stack>
           <Group gap={1}>
             <Button

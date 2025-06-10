@@ -93,6 +93,8 @@ export function setup(app: PiletApi) {
   );
   app.registerExtension(
     "property-chart-banner-actions-extension-slot",
-    ({ params }) => <PropertyQuickActions {...params} />
+    ({ params }) => (
+      <PropertyQuickActions {...params} launchWorkspace={app.launchWorkspace} />
+    )
   );
 }

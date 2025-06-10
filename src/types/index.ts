@@ -203,6 +203,7 @@ export interface Ward {
 }
 
 export type RelatedProperty = {
+  id:string
   name: string;
   relationshipToIndex: string;
   relationship: Relationship;

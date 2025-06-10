@@ -1,25 +1,25 @@
-import { handleApiErrors, uploadFiles } from "@hive/esm-core-api";
+import { cleanFiles, handleApiErrors, uploadFiles } from "@hive/esm-core-api";
 import { Button, Group, Image, SimpleGrid, Stack, Text } from "@mantine/core";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { showNotification } from "@mantine/notifications";
 import React, { FC, useState } from "react";
 import { usePropertiesApi } from "../hooks";
-import { PropertyMedia } from "../types";
+import { Property, PropertyMedia } from "../types";
 
-type PropertyGalaryFormProps = {
-  propertyId: string;
+type ThumbnailUploadFormProps = {
+  property: Property;
   onClose?: () => void;
-  onSuccess?: (docs: Array<PropertyMedia>) => void;
+  onSuccess?: (property: Property) => void;
 };
 
-const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
-  propertyId,
+const ThumbnailUploadForm: FC<ThumbnailUploadFormProps> = ({
+  property,
   onClose,
   onSuccess,
 }) => {
   const [files, setFiles] = useState<FileWithPath[]>([]);
   const [loading, setLoading] = useState(false);
-  const { addPropertyMedia, mutateProperties } = usePropertiesApi();
+  const { updateProperty, mutateProperties } = usePropertiesApi();
   const previews = files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
     return (
@@ -35,32 +35,22 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
     try {
       setLoading(true);
       const uploaded = await uploadFiles({
-        files: { images: files },
-        path: "galary",
+        files: { image: files },
+        path: "thumbnail",
       });
-      const _files = uploaded["images"];
-      const media = await Promise.allSettled(
-        _files.map(async (f) => {
-          return await addPropertyMedia(propertyId, {
-            type: "Image",
-            url: f.path,
-            metadata: {
-              memeType: f.memeType,
-              size: Number(f.bytesSize),
-              id: f.id,
-            },
-          });
-        })
-      );
-      const succesfull = media.filter((m) => m.status === "fulfilled");
-      const failed = media.filter((m) => m.status === "rejected");
+      const _file = uploaded["image"][0];
+
+      const _property = await updateProperty(property.id, {
+        thumbnail: _file.path,
+      });
+      if (property.thumbnail) await cleanFiles([property.thumbnail]);
       showNotification({
         title: `Upload complete`,
-        message: `${succesfull.length} out of ${media.length} Uploaded succesfully`,
+        message: `Thumnail Uploaded succesfully`,
         color: "green",
         position: "top-right",
       });
-      onSuccess?.(succesfull.map((s) => s.value));
+      onSuccess?.(_property);
       mutateProperties();
       onClose?.();
     } catch (error) {
@@ -84,6 +74,7 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
         onDrop={setFiles}
         loading={loading}
         disabled={loading}
+        multiple={false}
       >
         <Text ta="center">Drop images here</Text>
       </Dropzone>
@@ -108,4 +99,4 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
   );
 };
 
-export default PropertyGalaryForm;
+export default ThumbnailUploadForm;

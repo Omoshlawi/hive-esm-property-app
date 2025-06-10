@@ -4,7 +4,6 @@ import {
   StateFullDataTable,
   TablerIcon,
 } from "@hive/esm-core-components";
-import { PiletApi } from "@hive/esm-shell-app";
 import {
   ActionIcon,
   Avatar,
@@ -17,6 +16,7 @@ import {
 import { closeModal, openConfirmModal, openModal } from "@mantine/modals";
 import { IconTrash } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
+import { filesize } from "filesize";
 import React from "react";
 import { useParams } from "react-router-dom";
 import MediaGridView from "../components/MediaGridView";
@@ -24,7 +24,6 @@ import PropertyGalaryForm from "../forms/PropertyGalaryForm";
 import { usePropertyMedia } from "../hooks";
 import { PropertyMedia } from "../types";
 type PropertyMediaPageProps = {};
-import { filesize } from "filesize";
 
 const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
   const { propertyId } = useParams<{ propertyId: string }>();

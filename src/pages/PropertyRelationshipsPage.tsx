@@ -10,7 +10,7 @@ import {
 import { PiletApi } from "@hive/esm-shell-app";
 import React from "react";
 import { useRelatedProperties, useRelationships } from "../hooks";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ColumnDef } from "@tanstack/react-table";
 import { RelatedProperty, Relationship } from "../types";
 import { ActionIcon, Button, Group, Text } from "@mantine/core";
@@ -137,7 +137,26 @@ const PropertyRelationshipsPage: React.FC<PropertyRelationshipsPageProps> = ({
 };
 export default PropertyRelationshipsPage;
 const columns: ColumnDef<RelatedProperty>[] = [
-  { accessorKey: "name", header: "Related Property" },
+  {
+    accessorKey: "name",
+    header: "Related Property",
+    cell({ row, getValue }) {
+      const propertyId = row.original.id;
+      const propertyName = getValue<string>();
+      const linkToChart = `/dashboard/properties/${propertyId}`;
+      return (
+        <Button
+          component={Link}
+          to={linkToChart}
+          variant="transparent"
+          p={0}
+          m={0}
+        >
+          {propertyName}
+        </Button>
+      );
+    },
+  },
   {
     accessorKey: "relationship.startDate",
     header({ column }) {
