@@ -13,6 +13,7 @@ export const PropertyMediaSchema = z.object({
         coerce: true,
       }),
       memeType: z.string().min(1, "Required").optional(),
+      id: z.string().min(1, "Required").uuid(),
     })
     .optional(),
 });

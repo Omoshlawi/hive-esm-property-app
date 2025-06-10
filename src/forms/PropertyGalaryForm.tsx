@@ -44,7 +44,7 @@ const PropertyGalaryForm: FC<PropertyGalaryForm> = ({
           return await addPropertyMedia(propertyId, {
             type: "Image",
             url: f.path,
-            metadata: { memeType: f.memeType, size: Number(f.bytesSize) },
+            metadata: { memeType: f.memeType, size: Number(f.bytesSize),id: f.id },
           });
         })
       );

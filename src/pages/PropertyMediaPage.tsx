@@ -20,10 +20,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import { useParams } from "react-router-dom";
 import MediaGridView from "../components/MediaGridView";
-import PropertyGalaryForm from "../components/PropertyGalaryForm";
+import PropertyGalaryForm from "../forms/PropertyGalaryForm";
 import { usePropertyMedia } from "../hooks";
 import { PropertyMedia } from "../types";
 type PropertyMediaPageProps = {};
+import { filesize } from "filesize";
 
 const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
   const { propertyId } = useParams<{ propertyId: string }>();
@@ -186,6 +187,16 @@ const columns: ColumnDef<PropertyMedia>[] = [
     },
   },
 
+  {
+    accessorKey: "metadata.size",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Size" />;
+    },
+    cell({ getValue }) {
+      const size = getValue<number>();
+      return filesize(size);
+    },
+  },
   {
     accessorKey: "createdAt",
     header({ column }) {

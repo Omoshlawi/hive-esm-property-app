@@ -5,18 +5,19 @@
   "keywords": [
     "pilet"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "filesize": "^10.1.6"
+  },
   "devDependencies": {
     "@hive/esm-core-api": "../hive-esm-core/packages/esm-core-api/hive-esm-core-api-v1.0.0.tgz",
     "@hive/esm-core-components": "../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz",
     "@hive/esm-shell-app": "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz",
     "@hookform/resolvers": "5.0.1",
     "@mantine/core": "8.0.2",
+    "@mantine/dates": "8.0.2",
+    "@mantine/dropzone": "8.1.0",
     "@mantine/hooks": "8.0.2",
     "@mantine/modals": "8.0.2",
-    "@mantine/dates": "8.0.2",
-        "@mantine/dropzone": "8.1.0",
-    "dayjs": "^1.11.13",
     "@mantine/notifications": "8.0.2",
     "@mantine/spotlight": "8.0.2",
     "@tabler/icons-react": "3.34.0",
@@ -25,6 +26,7 @@
     "@types/react": "*",
     "@types/react-dom": "*",
     "@types/react-router-dom": "^5.3.3",
+    "dayjs": "^1.11.13",
     "piral-cli": "1.8.5",
     "piral-cli-esbuild": "latest",
     "react": "18.3.1",
