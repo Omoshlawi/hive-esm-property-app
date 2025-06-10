@@ -32,8 +32,11 @@ export const useProperty = (id: string) => {
   };
 };
 
-export const usePropertyMedia = (propertyId: string) => {
-  const path = constructUrl(`/properties/${propertyId}/media`, {});
+export const usePropertyMedia = (
+  propertyId: string,
+  type?: PropertyMedia["type"]
+) => {
+  const path = constructUrl(`/properties/${propertyId}/media`, { type });
 
   const { data, error, isLoading, mutate } =
     useSWR<APIFetchResponse<{ results: PropertyMedia[] }>>(path);

@@ -1,3 +1,4 @@
+import { getHiveFileUrl } from "@hive/esm-core-api";
 import {
   DataTableColumnHeader,
   StateFullDataTable,
@@ -9,33 +10,91 @@ import {
   Avatar,
   Button,
   Center,
+  Group,
   Image,
-  Paper,
+  Text,
 } from "@mantine/core";
+import { closeModal, openConfirmModal, openModal } from "@mantine/modals";
+import { IconTrash } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import { useParams } from "react-router-dom";
+import MediaGridView from "../components/MediaGridView";
+import PropertyGalaryForm from "../components/PropertyGalaryForm";
 import { usePropertyMedia } from "../hooks";
 import { PropertyMedia } from "../types";
-import { IconTrash } from "@tabler/icons-react";
-import { getHiveFileUrl } from "@hive/esm-core-api";
-import { openModal } from "@mantine/modals";
-import MediaGridView from "../components/MediaGridView";
-type PropertyMediaPageProps = Pick<PiletApi, "launchWorkspace"> & {};
+type PropertyMediaPageProps = {};
 
-const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
-  launchWorkspace,
-}) => {
+const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
   const { propertyId } = useParams<{ propertyId: string }>();
-  const propertyMediaAsync = usePropertyMedia(propertyId);
+  const propertyMediaAsync = usePropertyMedia(propertyId, "Image");
   const title = "Property Media";
+
+  const handleAdd = () => {
+    const modalId = openModal({
+      title: "Upload Property Images",
+      children: (
+        <PropertyGalaryForm
+          propertyId={propertyId}
+          onClose={() => closeModal(modalId)}
+        />
+      ),
+    });
+  };
+  const handleDelete = (media: PropertyMedia) => {
+    openConfirmModal({
+      title: "Delete media",
+      children: (
+        <Text>
+          Are you sure you want to delete this role.This action is destructive
+          and will delete all data related to role
+        </Text>
+      ),
+      labels: { confirm: "Delete media", cancel: "No don't delete it" },
+      confirmProps: { color: "red" },
+      centered: true,
+      onConfirm() {
+        // TODO Implement delete
+      },
+    });
+  };
+
   return (
     <StateFullDataTable
-      columns={columns}
+      defaultView="grid"
+      columns={[
+        ...columns,
+        {
+          id: "actions",
+          header: "Actions",
+          cell({ row }) {
+            const property = row.original;
+            return (
+              <Group>
+                <Group>
+                  <ActionIcon
+                    variant="outline"
+                    aria-label="Settings"
+                    color="red"
+                    onClick={() => handleDelete(property)}
+                  >
+                    <TablerIcon
+                      name="trash"
+                      style={{ width: "70%", height: "70%" }}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
+                </Group>
+              </Group>
+            );
+          },
+        },
+      ]}
       {...propertyMediaAsync}
       data={propertyMediaAsync.propertyMedia}
       title={title}
       withColumnViewOptions
+      onAdd={() => handleAdd()}
       renderActions={() => (
         <Button
           leftSection={<IconTrash size={16} />}
@@ -45,7 +104,6 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
           Delete
         </Button>
       )}
-      renderExpandedRow={() => <Paper>Here</Paper>}
       views={{
         grid: (table) => <MediaGridView media={table.options.data} />,
       }}
@@ -53,12 +111,12 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
         if (view === "table")
           return (
             <Center>
-              <TablerIcon name="layoutGrid" />
+              <TablerIcon name="layoutList" />
             </Center>
           );
         return (
           <Center>
-            <TablerIcon name="layoutList" />
+            <TablerIcon name="layoutGrid" />
           </Center>
         );
       }}
@@ -68,47 +126,6 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
 
 export default PropertyMediaPage;
 const columns: ColumnDef<PropertyMedia>[] = [
-  {
-    id: "expand",
-    header: ({ table }) => {
-      const allRowsExpanded = table.getIsAllRowsExpanded();
-      //   const someRowsExpanded = table.getIsSomeRowsExpanded();
-      return (
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          onClick={() => table.toggleAllRowsExpanded(!allRowsExpanded)}
-          style={{ cursor: "pointer" }}
-          aria-label="Expand all"
-        >
-          <TablerIcon
-            name={allRowsExpanded ? "chevronUp" : "chevronDown"}
-            size={16}
-          />
-        </ActionIcon>
-      );
-    },
-    cell: ({ row }) => {
-      const rowExpanded = row.getIsExpanded();
-      return (
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          onClick={() => row.toggleExpanded(!rowExpanded)}
-          style={{ cursor: "pointer" }}
-          aria-label="Expand Row"
-        >
-          <TablerIcon
-            name={rowExpanded ? "chevronUp" : "chevronDown"}
-            size={16}
-          />
-        </ActionIcon>
-      );
-    },
-    enableSorting: false,
-    enableHiding: false,
-    size: 20,
-  },
   {
     accessorKey: "url",
     header: "Image",
@@ -121,6 +138,7 @@ const columns: ColumnDef<PropertyMedia>[] = [
           alt="Property media"
           src={img}
           radius={"xl"}
+          role="button"
           onClick={() => {
             openModal({
               fullScreen: true,
@@ -137,25 +155,34 @@ const columns: ColumnDef<PropertyMedia>[] = [
         />
       );
     },
-    size: 10,
   },
   {
-    accessorKey: "title",
-    header: "Title",
-    cell({ getValue }) {
-      const title = getValue<string>();
-      return title || "--";
-    },
-  },
-  {
-    accessorKey: "order",
-    header: "Order",
-  },
+    accessorKey: "path",
+    header: "Path",
+    cell({ row }) {
+      const media = row.original;
+      const img = getHiveFileUrl(media.url);
 
-  {
-    accessorKey: "type",
-    header({ column }) {
-      return <DataTableColumnHeader column={column} title="Type" />;
+      return (
+        <Button
+          variant="transparent"
+          onClick={() =>
+            openModal({
+              fullScreen: true,
+              title: media.title ?? "Media File",
+              children: (
+                <Image
+                  src={img}
+                  fit="contain"
+                  fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                />
+              ),
+            })
+          }
+        >
+          {(media.url.split("/") as any)?.at(-1)}
+        </Button>
+      );
     },
   },
 

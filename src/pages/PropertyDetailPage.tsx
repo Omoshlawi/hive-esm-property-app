@@ -15,7 +15,7 @@ import {
   Stack,
   Text,
   ThemeIcon,
-  Timeline
+  Timeline,
 } from "@mantine/core";
 import {
   IconBuilding,
@@ -26,11 +26,12 @@ import {
   IconHome,
   IconMapPin,
   IconShare,
-  IconUser
+  IconUser,
 } from "@tabler/icons-react";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useProperty } from "../hooks";
+import { getHiveFileUrl } from "@hive/esm-core-api";
 
 type PropertyDetailPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
@@ -77,10 +78,10 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
                 <Group align="flex-start" gap="lg">
                   {property.thumbnail ? (
                     <Image
-                      src={property.thumbnail}
+                      src={getHiveFileUrl(property.thumbnail)}
                       alt={property.name}
                       width={120}
-                      height={120}
+                      height={420}
                       radius="md"
                       fallbackSrc="https://placehold.co/600x500?text=Placeholder"
                     />

@@ -89,7 +89,7 @@ export interface Relationship {
 export interface PropertyMedia {
   id: string;
   propertyId: string;
-  type: string;
+  type: "Image" | "Video" | "Document" | "Tour_3D";
   url: string;
   title: any;
   description: string;

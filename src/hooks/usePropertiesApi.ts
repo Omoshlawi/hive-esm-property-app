@@ -3,6 +3,7 @@ import {
   APIFetchResponse,
   constructUrl,
   debounce,
+  mutate,
 } from "@hive/esm-core-api";
 import {
   Property,
@@ -123,6 +124,7 @@ export const usePropertiesApi = () => {
     searchProperty,
     addPropertiesRelationship,
     updatePropertiesRelationship,
+    mutateProperties: () => mutate("/properties"),
   };
 };
 

@@ -32,11 +32,9 @@ export function setup(app: PiletApi) {
     () => <PropertyRelationships launchWorkspace={app.launchWorkspace} />,
     { layout: "propertyChart" }
   );
-  app.registerPage(
-    "/dashboard/properties/:propertyId/media",
-    () => <PropertyMedia launchWorkspace={app.launchWorkspace} />,
-    { layout: "propertyChart" }
-  );
+  app.registerPage("/dashboard/properties/:propertyId/galary", PropertyMedia, {
+    layout: "propertyChart",
+  });
   app.registerMenu(
     ({ onClose }: any) => (
       <HeaderLink
@@ -81,8 +79,8 @@ export function setup(app: PiletApi) {
 
       return (
         <HeaderLink
-          label="Media"
-          to={`/dashboard/properties/${id}/media`}
+          label="Galary"
+          to={`/dashboard/properties/${id}/galary`}
           onClose={onClose ?? (() => {})}
         />
       );

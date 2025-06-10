@@ -10,7 +10,7 @@ type MediaGridViewProps = {
 
 const MediaGridView: React.FC<MediaGridViewProps> = ({ media }) => {
   return (
-    <Grid>
+    <Grid m={"sm"}>
       {media.map((m) => {
         const img = getHiveFileUrl(m.url);
 
@@ -44,10 +44,6 @@ const MediaGridView: React.FC<MediaGridViewProps> = ({ media }) => {
                 w={"100%"}
                 height={"300"}
               />
-              <Stack p={"md"}>
-                <Title order={6}>{m.title || "No title"}</Title>
-                <Text c={"dimmed"}>{m.description || "No Caption"}</Text>
-              </Stack>
             </Card>
           </Grid.Col>
         );
