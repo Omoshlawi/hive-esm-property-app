@@ -1,31 +1,31 @@
-import { PiletApi } from "@hive/esm-shell-app";
-import { ColumnDef } from "@tanstack/react-table";
-import React from "react";
-import { Property } from "../types";
-import { useProperties } from "../hooks";
-import PropertyForm from "../forms/PropertyForm";
 import {
-  ActionIcon,
-  Button,
-  Group,
-  Paper,
-  Pill,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
-import {
-  TablerIcon,
-  When,
-  TableSkeleton,
-  ErrorState,
-  EmptyState,
   DataTable,
   DataTableColumnHeader,
+  EmptyState,
+  ErrorState,
+  TablerIcon,
+  TableSkeleton,
+  When,
 } from "@hive/esm-core-components";
+import { PiletApi } from "@hive/esm-shell-app";
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Group,
+  Text,
+  useComputedColorScheme,
+} from "@mantine/core";
+import { openConfirmModal } from "@mantine/modals";
 import { IconPlus } from "@tabler/icons-react";
+import { ColumnDef } from "@tanstack/react-table";
+import React from "react";
 import { Link } from "react-router-dom";
+import PropertyStatusHistory from "../components/PropertyStatusHistory";
+import PropertyForm from "../forms/PropertyForm";
+import { useProperties } from "../hooks";
+import { Property } from "../types";
+import { getStatusColor, getStatusVariant } from "../utils/helpers";
 
 type PropertiesPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 
@@ -113,6 +113,9 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
           <DataTable
             data={data}
             columns={[...columns, actions]}
+            renderExpandedRow={({ original: { id } }) => (
+              <PropertyStatusHistory propertyId={id} />
+            )}
             renderActions={() => (
               <>
                 <Button
@@ -135,6 +138,47 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
 
 export default PropertiesPage;
 const columns: ColumnDef<Property>[] = [
+  {
+    id: "expand",
+    header: ({ table }) => {
+      const allRowsExpanded = table.getIsAllRowsExpanded();
+      //   const someRowsExpanded = table.getIsSomeRowsExpanded();
+      return (
+        <ActionIcon
+          variant="subtle"
+          color="gray"
+          onClick={() => table.toggleAllRowsExpanded(!allRowsExpanded)}
+          style={{ cursor: "pointer" }}
+          aria-label="Expand all"
+        >
+          <TablerIcon
+            name={allRowsExpanded ? "chevronUp" : "chevronDown"}
+            size={16}
+          />
+        </ActionIcon>
+      );
+    },
+    cell: ({ row }) => {
+      const rowExpanded = row.getIsExpanded();
+      return (
+        <ActionIcon
+          variant="subtle"
+          color="gray"
+          onClick={() => row.toggleExpanded(!rowExpanded)}
+          style={{ cursor: "pointer" }}
+          aria-label="Expand Row"
+        >
+          <TablerIcon
+            name={rowExpanded ? "chevronUp" : "chevronDown"}
+            size={16}
+          />
+        </ActionIcon>
+      );
+    },
+    enableSorting: false,
+    enableHiding: false,
+    size: 0,
+  },
   {
     accessorKey: "name",
     header: "Property",
@@ -175,7 +219,21 @@ const columns: ColumnDef<Property>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Status" />;
+    },
+    cell({ getValue }) {
+      const status = getValue<Property["status"]>();
+      const colorScheme = useComputedColorScheme();
+      return (
+        <Badge
+          color={getStatusColor(status)}
+          variant={getStatusVariant(status, colorScheme)}
+        >
+          {status}
+        </Badge>
+      );
+    },
   },
   {
     accessorKey: "createdAt",

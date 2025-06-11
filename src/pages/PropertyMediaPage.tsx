@@ -126,6 +126,7 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
 
 export default PropertyMediaPage;
 const columns: ColumnDef<PropertyMedia>[] = [
+  
   {
     accessorKey: "url",
     header: "Image",
