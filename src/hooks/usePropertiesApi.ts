@@ -11,6 +11,7 @@ import {
   PropertyMedia,
   PropertyMediaFormData,
   PropertyRelationshipFormData,
+  PropertyStatus,
   Relationship,
 } from "../types";
 import { useState } from "react";
@@ -113,6 +114,18 @@ const updatePropertiesRelationship = async (
   });
   return res.data;
 };
+
+const submitPropertyForReview = async (propertyId: string) => {
+  const url = `/properties/${propertyId}/status/submit`;
+  const res = await apiFetch<PropertyStatus>(url, { method: "POST" });
+  return res.data;
+};
+
+const approvePendingProperty = async (propertyId: string) => {
+  const url = `/properties/${propertyId}/status/approve`;
+  const res = await apiFetch<PropertyStatus>(url, { method: "POST" });
+  return res.data;
+};
 export const usePropertiesApi = () => {
   return {
     addProperty,
@@ -124,6 +137,8 @@ export const usePropertiesApi = () => {
     searchProperty,
     addPropertiesRelationship,
     updatePropertiesRelationship,
+    submitPropertyForReview,
+    approvePendingProperty,
     mutateProperties: () => mutate("/properties"),
   };
 };

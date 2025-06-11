@@ -32,6 +32,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useProperty } from "../hooks";
 import { getHiveFileUrl } from "@hive/esm-core-api";
+import { getStatusColor } from "../utils/helpers";
 
 type PropertyDetailPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
@@ -524,22 +525,6 @@ function CompletionItem({
       </Text>
     </Group>
   );
-}
-
-// Helper Functions
-function getStatusColor(status: string) {
-  switch (status) {
-    case "Published":
-      return "green";
-    case "Draft":
-      return "blue";
-    case "Under_Review":
-      return "orange";
-    case "Archived":
-      return "gray";
-    default:
-      return "gray";
-  }
 }
 
 function calculateCompletionPercentage(property: any): number {

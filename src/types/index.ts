@@ -59,7 +59,14 @@ export interface Property {
   categories?: PropertyCategory[];
   amenities?: PropertyAmenity[];
   attributes?: Attribute[];
-  status: "Draft" | "Published";
+  status:
+    | "Blocked"
+    | "Draft"
+    | "Archived"
+    | "Approved"
+    | "Rejected"
+    | "Paused"
+    | "Pending";
 }
 export interface RelationshipType {
   id: string;
@@ -203,8 +210,18 @@ export interface Ward {
 }
 
 export type RelatedProperty = {
-  id:string
+  id: string;
   name: string;
   relationshipToIndex: string;
   relationship: Relationship;
 };
+
+export interface PropertyStatus {
+  id: string;
+  propertyId: string;
+  previousStatus: string;
+  newStatus: string;
+  changedBy: string;
+  reason: any;
+  createdAt: string;
+}

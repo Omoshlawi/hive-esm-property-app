@@ -28,34 +28,12 @@ import BannerExpandedSection from "./BannerExpandedSection";
 import BannerloadingSkeleton from "./BannerloadingSkeleton";
 import DesktopActions from "./DesktopActions";
 import MobileActions from "./MobileActions";
+import { getStatusColor, getStatusVariant } from "../../utils/helpers";
 
 interface PropertyBannerProps {
   propertyId: string;
   Extension: React.ComponentType<{ name: string; params: Record<string, any> }>;
 }
-
-// Enhanced status color mapping with better visual hierarchy
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "Published":
-      return "green";
-    case "Draft":
-      return "blue";
-    case "Under_Review":
-      return "orange";
-    case "Archived":
-      return "gray";
-    default:
-      return "gray";
-  }
-};
-
-// Enhanced status variant for better visibility
-const getStatusVariant = (status: string, colorScheme: string) => {
-  if (status === "Published") return "filled";
-  if (colorScheme === "dark") return "light";
-  return "light";
-};
 
 // Format date helper with relative time
 const formatDate = (dateString: string) => {
