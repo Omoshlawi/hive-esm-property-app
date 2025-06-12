@@ -1,15 +1,9 @@
+import { StateFullDataTable } from "@hive/esm-core-components";
+import { Paper, Title } from "@mantine/core";
+import { ColumnDef } from "@tanstack/react-table";
 import React, { FC } from "react";
 import { usePropertyStatusHistory } from "../hooks";
-import {
-  DataTable,
-  ErrorState,
-  StateFullDataTable,
-  TableSkeleton,
-  When,
-} from "@hive/esm-core-components";
-import { ColumnDef } from "@tanstack/react-table";
 import { PropertyStatus } from "../types";
-import { Paper, Title } from "@mantine/core";
 
 type PropertyStatusHistoryProps = {
   propertyId: string;

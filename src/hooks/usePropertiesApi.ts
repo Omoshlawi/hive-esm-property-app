@@ -2,9 +2,11 @@ import {
   apiFetch,
   APIFetchResponse,
   constructUrl,
-  debounce,
   mutate,
 } from "@hive/esm-core-api";
+import { useDebouncedValue } from "@mantine/hooks";
+import { useState } from "react";
+import useSWR from "swr";
 import {
   Property,
   PropertyFormData,
@@ -14,8 +16,6 @@ import {
   PropertyStatus,
   Relationship,
 } from "../types";
-import { useState } from "react";
-import useSWR from "swr";
 
 const addProperty = async (data: PropertyFormData) => {
   const res = await apiFetch<Property>("/properties", {
@@ -145,7 +145,9 @@ export const usePropertiesApi = () => {
 
 export const useFilteredProperties = () => {
   const [filters, setFilters] = useState<Record<string, any>>({});
-  const url = constructUrl(`/properties`, filters);
+  const [debounced] = useDebouncedValue(filters, 500);
+
+  const url = constructUrl(`/properties`, debounced);
 
   const { data, error, isLoading } = useSWR<
     APIFetchResponse<{ results: Array<Property> }>
@@ -154,7 +156,7 @@ export const useFilteredProperties = () => {
     isLoading,
     error,
     properties: data?.data?.results ?? [],
-    setFilters: debounce(setFilters, 500),
+    setFilters,
     filters,
   };
 };
