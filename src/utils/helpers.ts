@@ -1,19 +1,19 @@
 // Enhanced status color mapping with better visual hierarchy
 export const getStatusColor = (status: string) => {
   switch (status) {
-    case "Blocked":
+    case "BLOCKED":
       return "red";
-    case "Draft":
+    case "DRAFT":
       return "blue";
-    case "Archived":
+    case "ARCHIVED":
       return "gray";
-    case "Approved":
+    case "APPROVED":
       return "green";
-    case "Rejected":
+    case "REJECTED":
       return "red";
-    case "Paused":
+    case "PAUSED":
       return "yellow";
-    case "Pending":
+    case "PENDING":
       return "orange";
     default:
       return "gray";
@@ -23,18 +23,18 @@ export const getStatusColor = (status: string) => {
 // Enhanced status variant for better visibility
 export const getStatusVariant = (status: string, colorScheme: string) => {
   switch (status) {
-    case "Blocked":
-    case "Rejected":
+    case "BLOCKED":
+    case "REJECTED":
       return "filled";
-    case "Approved":
+    case "APPROVED":
       return "filled";
-    case "Pending":
+    case "PENDING":
       return colorScheme === "dark" ? "light" : "outline";
-    case "Paused":
+    case "PAUSED":
       return "light";
-    case "Draft":
+    case "DRAFT":
       return colorScheme === "dark" ? "light" : "outline";
-    case "Archived":
+    case "ARCHIVED":
       return "light";
     default:
       return colorScheme === "dark" ? "light" : "outline";

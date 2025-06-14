@@ -60,13 +60,13 @@ export interface Property {
   amenities?: PropertyAmenity[];
   attributes?: Attribute[];
   status:
-    | "Blocked"
-    | "Draft"
-    | "Archived"
-    | "Approved"
-    | "Rejected"
-    | "Paused"
-    | "Pending";
+    | "BLOCKED"
+    | "DRAFT"
+    | "ARCHIVED"
+    | "APPROVED"
+    | "REJECTED"
+    | "PAUSED"
+    | "PENDING";
 }
 export interface RelationshipType {
   id: string;
@@ -96,7 +96,7 @@ export interface Relationship {
 export interface PropertyMedia {
   id: string;
   propertyId: string;
-  type: "Image" | "Video" | "Document" | "Tour_3D";
+  type: "IMAGE" | "VIDEO" | "DOCUMENT" | "TOUR_3D";
   url: string;
   title: any;
   description: string;

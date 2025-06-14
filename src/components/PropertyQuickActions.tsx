@@ -118,7 +118,7 @@ const PropertyQuickActions: FC<PropertyQuickActionsProps> = ({
       >
         Edit Property
       </Menu.Item>
-      {property.status === "Draft" && (
+      {property.status === "DRAFT" && (
         <Menu.Item
           leftSection={<IconUpload size={16} />}
           onClick={() => handleChangePropertyStatus("submit")}
@@ -126,7 +126,7 @@ const PropertyQuickActions: FC<PropertyQuickActionsProps> = ({
           Submit for review
         </Menu.Item>
       )}
-      {property.status === "Pending" && (
+      {property.status === "PENDING" && (
         <Menu.Item
           leftSection={<IconCheck size={16} />}
           onClick={() => handleChangePropertyStatus("approve")}
