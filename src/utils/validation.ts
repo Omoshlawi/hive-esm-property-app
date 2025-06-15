@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // Property Media
 export const PropertyMediaSchema = z.object({
-  type: z.enum(["Image", "Video", "Document", "Tour_3D"]),
+  type: z.enum(["IMAGE", "VIDEO", "DOCUMENT", "TOUR_3D"]),
   url: z.string().optional(),
   title: z.string().min(1, "Required").optional(),
   description: z.string().min(1, "Required").optional(),

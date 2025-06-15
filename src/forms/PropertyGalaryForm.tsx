@@ -42,7 +42,7 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
       const media = await Promise.allSettled(
         _files.map(async (f) => {
           return await addPropertyMedia(propertyId, {
-            type: "Image",
+            type: "IMAGE",
             url: f.path,
             metadata: {
               memeType: f.memeType,

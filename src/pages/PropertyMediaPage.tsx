@@ -27,7 +27,7 @@ type PropertyMediaPageProps = {};
 
 const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
   const { propertyId } = useParams<{ propertyId: string }>();
-  const propertyMediaAsync = usePropertyMedia(propertyId, "Image");
+  const propertyMediaAsync = usePropertyMedia(propertyId, "IMAGE");
   const title = "Property Media";
 
   const handleAdd = () => {
@@ -126,7 +126,6 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
 
 export default PropertyMediaPage;
 const columns: ColumnDef<PropertyMedia>[] = [
-  
   {
     accessorKey: "url",
     header: "Image",
