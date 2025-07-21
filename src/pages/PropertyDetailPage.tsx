@@ -8,18 +8,12 @@ import {
   Grid,
   Group,
   Loader,
-  RingProgress,
   SimpleGrid,
   Stack,
   Text,
-  ThemeIcon,
-  Timeline,
 } from "@mantine/core";
 import {
   IconCalendar,
-  IconCheck,
-  IconClock,
-  IconEdit,
   IconHome,
   IconMapPin,
   IconUser,
@@ -28,11 +22,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import {
   ProfileCompletion,
+  PropertyRecentActivities,
   PropertyStatistics,
   PropertyThumbnail,
 } from "../components/overview";
 import { useProperty } from "../hooks";
-import { getStatusColor } from "../utils/helpers";
 
 type PropertyDetailPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
@@ -87,7 +81,13 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
 
               {/* Property Details */}
               <Grid.Col span={{ base: 12, md: 8 }}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder>
+                <Card
+                  shadow="sm"
+                  padding="lg"
+                  radius="md"
+                  withBorder
+                  h={"100%"}
+                >
                   <Stack gap="md">
                     <Text size="lg" fw={600}>
                       Property Details
@@ -158,75 +158,7 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
                 </Card>
               </Grid.Col>
               <Grid.Col span={{ base: 12, md: 4 }}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder>
-                  <Stack gap="md">
-                    <Text size="lg" fw={600}>
-                      Property Details
-                    </Text>
-
-                    <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-                      <Stack gap="xs">
-                        <Group gap="xs">
-                          <IconMapPin size={16} color="gray" />
-                          <Text fw={500}>Location</Text>
-                        </Group>
-                        <Text size="sm" c="dimmed" pl="lg">
-                          {property.address
-                            ? `${property.address.county || ""} ${
-                                property.address.subCounty || ""
-                              } ${property.address.ward || ""}`.trim() ||
-                              "Address not set"
-                            : "Address not set"}
-                        </Text>
-                      </Stack>
-
-                      <Stack gap="xs">
-                        <Group gap="xs">
-                          <IconHome size={16} color="gray" />
-                          <Text fw={500}>Organization</Text>
-                        </Group>
-                        <Text size="sm" c="dimmed" pl="lg">
-                          {property.organization?.name || "Not specified"}
-                        </Text>
-                      </Stack>
-
-                      <Stack gap="xs">
-                        <Group gap="xs">
-                          <IconCalendar size={16} color="gray" />
-                          <Text fw={500}>Created</Text>
-                        </Group>
-                        <Text size="sm" c="dimmed" pl="lg">
-                          {new Date(property.createdAt).toLocaleDateString()}
-                        </Text>
-                      </Stack>
-
-                      <Stack gap="xs">
-                        <Group gap="xs">
-                          <IconUser size={16} color="gray" />
-                          <Text fw={500}>Property ID</Text>
-                        </Group>
-                        <Text size="sm" c="dimmed" pl="lg" ff="monospace">
-                          {property.id.slice(0, 8)}...
-                        </Text>
-                      </Stack>
-                    </SimpleGrid>
-
-                    {/* Room Details */}
-                    {property.attributes.length > 0 && (
-                      <>
-                        <Divider />
-                        <Group gap="lg">
-                          {property.attributes.map((attr) => (
-                            <Group gap="xs" key={attr.id}>
-                              <Text fw={500}>{attr.attribute.name}:</Text>
-                              <Badge variant="light">{attr.value}</Badge>
-                            </Group>
-                          ))}
-                        </Group>
-                      </>
-                    )}
-                  </Stack>
-                </Card>
+                <PropertyRecentActivities property={property} />
               </Grid.Col>
 
               {/* Categories & Amenities */}
@@ -298,55 +230,6 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
                   </Card>
                 </Grid.Col>
               )}
-
-              {/* Recent Activity Timeline */}
-              <Grid.Col span={12}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder>
-                  <Stack gap="md">
-                    <Text size="lg" fw={600}>
-                      Recent Activity
-                    </Text>
-
-                    <Timeline active={3} bulletSize={24} lineWidth={2}>
-                      <Timeline.Item
-                        bullet={<IconCheck size={12} />}
-                        title="Property Created"
-                        color="green"
-                      >
-                        <Text c="dimmed" size="sm">
-                          Property was successfully created
-                        </Text>
-                        <Text size="xs" mt={4}>
-                          {new Date(property.createdAt).toLocaleString()}
-                        </Text>
-                      </Timeline.Item>
-
-                      <Timeline.Item
-                        bullet={<IconEdit size={12} />}
-                        title="Last Updated"
-                        color="blue"
-                      >
-                        <Text c="dimmed" size="sm">
-                          Property information was modified
-                        </Text>
-                        <Text size="xs" mt={4}>
-                          {new Date(property.updatedAt).toLocaleString()}
-                        </Text>
-                      </Timeline.Item>
-
-                      <Timeline.Item
-                        bullet={<IconClock size={12} />}
-                        title={`Status: ${property.status}`}
-                        color={getStatusColor(property.status)}
-                      >
-                        <Text c="dimmed" size="sm">
-                          Current property status
-                        </Text>
-                      </Timeline.Item>
-                    </Timeline>
-                  </Stack>
-                </Card>
-              </Grid.Col>
             </Grid>
           </Stack>
         );

@@ -47,7 +47,7 @@ export interface Property {
   id: string;
   name: string;
   isVirtual: boolean;
-
+  propertyNumber: string;
   description: any;
   thumbnail: string;
   organizationId: string;

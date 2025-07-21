@@ -990,11 +990,11 @@
 
 "@hive/esm-core-components@../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz":
   version "1.0.0"
-  resolved "../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz#273c5ccfb14aa461eddae27e98227d2ba9333260"
+  resolved "../hive-esm-core/packages/esm-core-components/hive-esm-core-components-v1.0.0.tgz#3b16960c7d2d4c40932a52d962c2bd840d2425ee"
 
 "@hive/esm-shell-app@../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz":
   version "1.0.0"
-  resolved "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz#b577eb4a622835c8612a5bfc09ac37b002408634"
+  resolved "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz#f968a7addf0b0ec57847742219afd95f4a729c61"
 
 "@hookform/resolvers@5.0.1":
   version "5.0.1"

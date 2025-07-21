@@ -169,7 +169,7 @@ export function PropertyChartBanner({
                         borderRadius: theme.radius.xs,
                       }}
                     >
-                      ID: {property.id.slice(0, 8)}...
+                      ID: {property.propertyNumber}
                     </Text>
                     <Text size="sm" c={getTextColor("dimmed")}>
                       •
