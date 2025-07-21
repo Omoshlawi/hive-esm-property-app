@@ -10,6 +10,7 @@ import {
   PropertyMedia,
   PropertyRelationships,
 } from "./pages";
+import { OrganizationContextHeaderLink } from "./components/links";
 
 export function setup(app: PiletApi) {
   app.registerPageLayout("propertyChart", ({ children }) => (
@@ -37,7 +38,7 @@ export function setup(app: PiletApi) {
   });
   app.registerMenu(
     ({ onClose }: any) => (
-      <HeaderLink
+      <OrganizationContextHeaderLink
         label="Properties"
         to="/dashboard/properties"
         icon="building"

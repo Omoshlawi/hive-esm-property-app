@@ -1,8 +1,10 @@
 import {
+  DashboardPageHeader,
   DataTable,
   DataTableColumnHeader,
   EmptyState,
   ErrorState,
+  StateFullDataTable,
   TablerIcon,
   TableSkeleton,
   When,
@@ -11,8 +13,10 @@ import { PiletApi } from "@hive/esm-shell-app";
 import {
   ActionIcon,
   Badge,
+  Box,
   Button,
   Group,
+  Stack,
   Text,
   useComputedColorScheme,
 } from "@mantine/core";
@@ -31,7 +35,6 @@ type PropertiesPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 
 const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
   const propertiesAsync = useProperties();
-  const title = "Properties";
 
   const handleAddOrupdate = (property?: Property) => {
     const dispose = launchWorkspace(
@@ -102,37 +105,26 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
     },
   };
   return (
-    <When
-      asyncState={{ ...propertiesAsync, data: propertiesAsync.properties }}
-      loading={() => <TableSkeleton />}
-      error={(e) => <ErrorState error={e} title={title} />}
-      success={(data) => {
-        if (!data.length)
-          return <EmptyState title={title} onAdd={() => handleAddOrupdate()} />;
-        return (
-          <DataTable
-            data={data}
-            columns={[...columns, actions]}
-            renderExpandedRow={({ original: { id } }) => (
-              <PropertyStatusHistory propertyId={id} />
-            )}
-            renderActions={() => (
-              <>
-                <Button
-                  variant="light"
-                  leftSection={<IconPlus />}
-                  onClick={() => handleAddOrupdate()}
-                >
-                  Add
-                </Button>
-              </>
-            )}
-            title={title}
-            withColumnViewOptions
-          />
-        );
-      }}
-    />
+    <Stack gap={"xl"}>
+      <Box>
+        <DashboardPageHeader
+          title="Properties"
+          subTitle={`
+            Organization rental applications`}
+          icon={"building"}
+        />
+      </Box>
+      <StateFullDataTable
+        {...propertiesAsync}
+        data={propertiesAsync.properties}
+        withColumnViewOptions
+        onAdd={() => handleAddOrupdate()}
+        columns={[...columns, actions]}
+        renderExpandedRow={({ original: { id } }) => (
+          <PropertyStatusHistory propertyId={id} />
+        )}
+      />
+    </Stack>
   );
 };
 
