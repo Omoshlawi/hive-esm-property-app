@@ -25,6 +25,7 @@ import {
   Alert,
   Select,
   MultiSelect,
+  Checkbox,
 } from "@mantine/core";
 import { InputSkeleton, When } from "@hive/esm-core-components";
 import { IconExclamationCircle } from "@tabler/icons-react";
@@ -59,6 +60,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       name: property?.name ?? "",
       thumbnail: property?.thumbnail ?? "",
       description: property?.description ?? "",
+      isVirtual: property?.isVirtual ?? false,
     },
     resolver: zodResolver(PropertySchema),
   });
@@ -108,6 +110,21 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                   label="Property name"
                   error={fieldState.error?.message}
                   placeholder="Enter property name"
+                />
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="isVirtual"
+              render={({ field, fieldState }) => (
+                <Checkbox
+                  checked={field.value}
+                  onChange={(event) =>
+                    field.onChange(event.currentTarget.checked)
+                  }
+                  error={fieldState.error?.message}
+                  label="Virtual Property Group"
+                  description="Check if this property is a group of property units processed as a single entity. Leave unchecked for an actual physical structure/unit."
                 />
               )}
             />

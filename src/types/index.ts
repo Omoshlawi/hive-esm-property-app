@@ -46,6 +46,8 @@ export interface Address {
 export interface Property {
   id: string;
   name: string;
+  isVirtual: boolean;
+
   description: any;
   thumbnail: string;
   organizationId: string;

@@ -23,6 +23,7 @@ export const PropertySchema = z.object({
   name: z.string().min(1, "Required"),
   description: z.string().optional(),
   thumbnail: z.string().optional(),
+  isVirtual: z.boolean(),
   attributes: z
     .array(
       z.object({

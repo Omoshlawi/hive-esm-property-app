@@ -52,7 +52,7 @@ export function setup(app: PiletApi) {
       const id = useChartCurrentProperty();
       return (
         <HeaderLink
-          label={"Summary"}
+          label={"Overview"}
           to={`/dashboard/properties/${id}`}
           onClose={onClose ?? (() => {})}
           activeWhen={(currpath) => currpath === `/dashboard/properties/${id}`}

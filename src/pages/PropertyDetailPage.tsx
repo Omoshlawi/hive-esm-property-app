@@ -1,14 +1,12 @@
 import { EmptyState, ErrorState, When } from "@hive/esm-core-components";
 import { PiletApi } from "@hive/esm-shell-app";
 import {
-  ActionIcon,
-  Avatar,
   Badge,
   Card,
+  Center,
   Divider,
   Grid,
   Group,
-  Image,
   Loader,
   RingProgress,
   SimpleGrid,
@@ -18,20 +16,22 @@ import {
   Timeline,
 } from "@mantine/core";
 import {
-  IconBuilding,
   IconCalendar,
   IconCheck,
   IconClock,
   IconEdit,
   IconHome,
   IconMapPin,
-  IconShare,
   IconUser,
 } from "@tabler/icons-react";
 import React from "react";
 import { useParams } from "react-router-dom";
+import {
+  ProfileCompletion,
+  PropertyStatistics,
+  PropertyThumbnail,
+} from "../components/overview";
 import { useProperty } from "../hooks";
-import { getHiveFileUrl } from "@hive/esm-core-api";
 import { getStatusColor } from "../utils/helpers";
 
 type PropertyDetailPageProps = Pick<PiletApi, "launchWorkspace"> & {};
@@ -55,184 +55,34 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
       error={(err) => <ErrorState error={err} title="Property summary" />}
       loading={() => <Loader />}
       success={(property) => {
-        const completionPercentage = calculateCompletionPercentage(property);
-
         return (
           <Stack gap="lg">
             {/* Property Overview Card */}
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Stack gap="md">
-                <Group justify="space-between">
-                  <Text size="lg" fw={600}>
-                    Property Overview
+            <Stack gap="md">
+              <PropertyThumbnail property={property} />
+              <Card>
+                <Text size="lg" fw={600}>
+                  Description
+                </Text>
+                <Center>
+                  <Text size="sm" c="dimmed" lineClamp={3}>
+                    {property?.description
+                      ? property.description
+                      : "No Description"}
                   </Text>
-                  <Group gap="xs">
-                    <ActionIcon variant="light" color="blue">
-                      <IconEdit size={16} />
-                    </ActionIcon>
-                    <ActionIcon variant="light" color="green">
-                      <IconShare size={16} />
-                    </ActionIcon>
-                  </Group>
-                </Group>
-
-                <Group align="flex-start" gap="lg">
-                  {property.thumbnail ? (
-                    <Image
-                      src={getHiveFileUrl(property.thumbnail)}
-                      alt={property.name}
-                      width={120}
-                      height={420}
-                      radius="md"
-                      fallbackSrc="https://placehold.co/600x500?text=Placeholder"
-                    />
-                  ) : (
-                    <Avatar size={120} radius="md">
-                      <IconBuilding size={60} />
-                    </Avatar>
-                  )}
-
-                  <Stack gap="xs" style={{ flex: 1 }}>
-                    <Group gap="xs">
-                      <Text size="xl" fw={700}>
-                        {property.name}
-                      </Text>
-                      <Badge
-                        color={getStatusColor(property.status)}
-                        variant="filled"
-                      >
-                        {property.status}
-                      </Badge>
-                    </Group>
-
-                    {property.description && (
-                      <Text size="sm" c="dimmed" lineClamp={3}>
-                        {property.description}
-                      </Text>
-                    )}
-                  </Stack>
-                </Group>
-              </Stack>
-            </Card>
+                </Center>
+              </Card>
+            </Stack>
 
             <Grid>
               {/* Key Statistics */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder h="100%">
-                  <Stack gap="md">
-                    <Text size="lg" fw={600}>
-                      Key Statistics
-                    </Text>
-
-                    <SimpleGrid cols={2} spacing="md">
-                      <div style={{ textAlign: "center" }}>
-                        <Text size="xl" fw={700} c="blue">
-                          {0}
-                        </Text>
-                        <Text size="sm" c="dimmed">
-                          Views
-                        </Text>
-                      </div>
-
-                      <div style={{ textAlign: "center" }}>
-                        <Text size="xl" fw={700} c="red">
-                          {0}
-                        </Text>
-                        <Text size="sm" c="dimmed">
-                          Favorites
-                        </Text>
-                      </div>
-
-                      <div style={{ textAlign: "center" }}>
-                        <Text size="xl" fw={700} c="green">
-                          {0}
-                        </Text>
-                        <Text size="sm" c="dimmed">
-                          Inquiries
-                        </Text>
-                      </div>
-
-                      <div style={{ textAlign: "center" }}>
-                        <Text size="xl" fw={700} c="orange">
-                          {0}
-                        </Text>
-                        <Text size="sm" c="dimmed">
-                          Photos
-                        </Text>
-                      </div>
-                    </SimpleGrid>
-                  </Stack>
-                </Card>
+                <PropertyStatistics property={property} />
               </Grid.Col>
 
               {/* Profile Completion */}
               <Grid.Col span={{ base: 12, md: 6 }}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder h="100%">
-                  <Stack gap="md">
-                    <Group justify="space-between">
-                      <Text size="lg" fw={600}>
-                        Profile Completion
-                      </Text>
-                      <Text
-                        size="sm"
-                        fw={600}
-                        c={completionPercentage >= 80 ? "green" : "orange"}
-                      >
-                        {completionPercentage}%
-                      </Text>
-                    </Group>
-
-                    <RingProgress
-                      size={120}
-                      thickness={12}
-                      sections={[
-                        {
-                          value: completionPercentage,
-                          color:
-                            completionPercentage >= 80 ? "green" : "orange",
-                        },
-                      ]}
-                      label={
-                        <Text
-                          size="xs"
-                          ta="center"
-                          px="xs"
-                          style={{ pointerEvents: "none" }}
-                        >
-                          {completionPercentage >= 80
-                            ? "Complete"
-                            : "Needs Work"}
-                        </Text>
-                      }
-                      style={{ alignSelf: "center" }}
-                    />
-
-                    <Stack gap="xs">
-                      <CompletionItem
-                        completed={!!property.name}
-                        label="Property Name"
-                      />
-                      <CompletionItem
-                        completed={!!property.description}
-                        label="Description"
-                      />
-                      <CompletionItem
-                        completed={!!property.thumbnail}
-                        label="Main Photo"
-                      />
-                      <CompletionItem
-                        completed={!!property.address}
-                        label="Address"
-                      />
-                      <CompletionItem
-                        completed={
-                          property.amenities && property.amenities.length > 0
-                        }
-                        label="Amenities"
-                      />
-                    </Stack>
-                  </Stack>
-                </Card>
+                <ProfileCompletion property={property} />
               </Grid.Col>
 
               {/* Property Details */}
@@ -506,39 +356,3 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
 };
 
 export default PropertyDetailPage;
-
-// Helper Components
-function CompletionItem({
-  completed,
-  label,
-}: {
-  completed: boolean;
-  label: string;
-}) {
-  return (
-    <Group gap="xs">
-      <ThemeIcon size="sm" variant="light" color={completed ? "green" : "gray"}>
-        <IconCheck size={12} />
-      </ThemeIcon>
-      <Text size="sm" c={completed ? "green" : "dimmed"}>
-        {label}
-      </Text>
-    </Group>
-  );
-}
-
-function calculateCompletionPercentage(property: any): number {
-  const checks = [
-    !!property.name,
-    !!property.description,
-    !!property.thumbnail,
-    !!property.address,
-    property.media && property.media.length > 0,
-    property.amenities && property.amenities.length > 0,
-    !!property.price,
-    !!property.type,
-  ];
-
-  const completed = checks.filter(Boolean).length;
-  return Math.round((completed / checks.length) * 100);
-}
