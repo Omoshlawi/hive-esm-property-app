@@ -54,7 +54,7 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
             {/* Property Overview Card */}
             <Stack gap="md">
               <PropertyThumbnail property={property} />
-              <Card>
+              <Card withBorder>
                 <Text size="lg" fw={600}>
                   Description
                 </Text>

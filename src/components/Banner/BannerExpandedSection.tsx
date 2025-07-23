@@ -1,21 +1,18 @@
+import { TablerIcon, TablerIconName } from "@hive/esm-core-components";
+import {
+  Card,
+  Chip,
+  Group,
+  SimpleGrid,
+  Stack,
+  Table,
+  Text,
+  useComputedColorScheme,
+  useMantineTheme,
+} from "@mantine/core";
+import { IconBuilding } from "@tabler/icons-react";
 import React, { FC } from "react";
 import { Property } from "../../types";
-import {
-  Box,
-  alpha,
-  rem,
-  Stack,
-  Group,
-  Text,
-  useMantineTheme,
-  useComputedColorScheme,
-} from "@mantine/core";
-import {
-  IconUser,
-  IconMapPin,
-  IconCalendar,
-  IconBuilding,
-} from "@tabler/icons-react";
 
 type BannerExpandedSectionProps = {
   property: Property;
@@ -50,99 +47,125 @@ const BannerExpandedSection: FC<BannerExpandedSectionProps> = ({
     }
     return type === "primary" ? theme.colors.gray[9] : theme.colors.gray[6];
   };
-  const getBorderColor = () => {
-    return colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3];
-  };
+  const attrs: Array<{ icon: TablerIconName; label: string; value: string }> = [
+    {
+      icon: "mapPin",
+      value: `${property.address?.landmark}`,
+      label: "Landmark",
+    },
+    {
+      icon: "addressBook",
+      value: `${property.address?.ward}  ${property.address?.subCounty}  ${property?.address?.county}`,
+      label: "Address",
+    },
+    {
+      icon: "building",
+      value: property.categories?.map((c) => c.category?.name).join(", "),
+      label: "Property",
+    },
+    {
+      icon: "calendar",
+      value: formatDate(property.updatedAt || property.createdAt),
+      label: "Last updated",
+    },
+  ];
   return (
-    <Box
-      mt="lg"
-      pt="md"
-      style={{
-        borderTop: `1px solid ${getBorderColor()}`,
-        backgroundColor:
-          colorScheme === "dark"
-            ? alpha(theme.colors.dark[7], 0.3)
-            : alpha(theme.colors.gray[0], 0.5),
-        marginLeft: rem(-16),
-        marginRight: rem(-16),
-        paddingLeft: rem(16),
-        paddingRight: rem(16),
-        borderRadius: `0 0 ${theme.radius.md} ${theme.radius.md}`,
-      }}
-    >
-      <Stack gap="md">
-        <Text size="sm" fw={600} c={getTextColor("primary")} mb="xs">
-          Property Details
+    <Stack gap="md">
+      <Text size="sm" fw={600} c={getTextColor("primary")} mb="xs">
+        Property Details
+      </Text>
+      <Table withColumnBorders withTableBorder withRowBorders>
+        <Table.Tr>
+          <Table.Td>
+            <Stack>
+              <Group gap="xs">
+                <TablerIcon
+                  name={"mapPin"}
+                  size={16}
+                  style={{ color: getTextColor("dimmed") }}
+                />
+                <Text size="sm" fw={500} c={getTextColor("primary")}>
+                  {"Landmark"}
+                </Text>
+              </Group>
+              <Text size="sm" c={getTextColor("dimmed")}>
+                {property.address?.landmark}
+              </Text>
+            </Stack>
+          </Table.Td>
+          <Table.Td>
+            <Stack>
+              <Group gap="xs">
+                <TablerIcon
+                  name={"addressBook"}
+                  size={16}
+                  style={{ color: getTextColor("dimmed") }}
+                />
+                <Text size="sm" fw={500} c={getTextColor("primary")}>
+                  {"Adress"}
+                </Text>
+              </Group>
+              <Text size="sm" c={getTextColor("dimmed")}>
+                {`${property.address?.ward}  ${property.address?.subCounty}  ${property?.address?.county}`}
+              </Text>
+            </Stack>
+          </Table.Td>
+        </Table.Tr>
+        <Table.Tr>
+          <Table.Td>
+            <Stack>
+              <Group gap="xs">
+                <TablerIcon
+                  name={"category"}
+                  size={16}
+                  style={{ color: getTextColor("dimmed") }}
+                />
+                <Text size="sm" fw={500} c={getTextColor("primary")}>
+                  {"Category"}
+                </Text>
+              </Group>
+              <Group gap={"xs"}>
+                {property.categories?.map((c) => (
+                  <Chip size="xs">{c.category?.name}</Chip>
+                ))}
+              </Group>
+            </Stack>
+          </Table.Td>
+          <Table.Td>
+            <Stack>
+              <Group gap="xs">
+                <TablerIcon
+                  name={"adjustments"}
+                  size={16}
+                  style={{ color: getTextColor("dimmed") }}
+                />
+                <Text size="sm" fw={500} c={getTextColor("primary")}>
+                  {"Amenities"}
+                </Text>
+              </Group>
+              <Group gap={"xs"}>
+                {property.amenities?.map((c) => (
+                  <Chip size="xs">{c.amenity?.name}</Chip>
+                ))}
+              </Group>
+            </Stack>
+          </Table.Td>
+        </Table.Tr>
+      </Table>
+      {property.description && (
+        <Text
+          size="sm"
+          c={getTextColor("dimmed")}
+          style={{
+            lineHeight: 1.5,
+            maxWidth: "100%",
+            wordBreak: "break-word",
+          }}
+        >
+          {property.description}
         </Text>
-
-        <Group grow align="flex-start">
-          <Stack gap="sm">
-            <Group gap="xs">
-              <IconUser size={16} style={{ color: getTextColor("dimmed") }} />
-              <Text size="sm" fw={500} c={getTextColor("primary")}>
-                Owner
-              </Text>
-            </Group>
-            <Text size="sm" c={getTextColor("dimmed")} pl="xl">
-              {"Not specified"}
-            </Text>
-          </Stack>
-
-          <Stack gap="sm">
-            <Group gap="xs">
-              <IconMapPin size={16} style={{ color: getTextColor("dimmed") }} />
-              <Text size="sm" fw={500} c={getTextColor("primary")}>
-                Location
-              </Text>
-            </Group>
-            <Text size="sm" c={getTextColor("dimmed")} pl="xl">
-              {"Not specified"}
-            </Text>
-          </Stack>
-
-          <Stack gap="sm">
-            <Group gap="xs">
-              <IconCalendar
-                size={16}
-                style={{ color: getTextColor("dimmed") }}
-              />
-              <Text size="sm" fw={500} c={getTextColor("primary")}>
-                Last Updated
-              </Text>
-            </Group>
-            <Text size="sm" c={getTextColor("dimmed")} pl="xl">
-              {formatDate(property.updatedAt || property.createdAt)}
-            </Text>
-          </Stack>
-        </Group>
-
-        {property.description && (
-          <Stack gap="sm">
-            <Group gap="xs">
-              <IconBuilding
-                size={16}
-                style={{ color: getTextColor("dimmed") }}
-              />
-              <Text size="sm" fw={500} c={getTextColor("primary")}>
-                Description
-              </Text>
-            </Group>
-            <Text
-              size="sm"
-              c={getTextColor("dimmed")}
-              pl="xl"
-              style={{
-                lineHeight: 1.5,
-                maxWidth: "100%",
-                wordBreak: "break-word",
-              }}
-            >
-              {property.description}
-            </Text>
-          </Stack>
-        )}
-      </Stack>
-    </Box>
+      )}
+    </Stack>
   );
 };
 

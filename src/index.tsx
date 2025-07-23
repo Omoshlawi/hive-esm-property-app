@@ -90,7 +90,7 @@ export function setup(app: PiletApi) {
   );
   app.registerExtension(
     "property-chart-banner-extension-slot",
-    ({ params }) => <PropertyChartBanner {...params} />
+    ({ params }) => <PropertyChartBanner {...params} color="blue" />
   );
   app.registerExtension(
     "property-chart-banner-actions-extension-slot",

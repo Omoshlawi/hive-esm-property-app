@@ -34,7 +34,7 @@ const PropertyThumbnail: FC<Props> = ({ property }) => {
       />
     );
   return (
-    <Card>
+    <Card withBorder radius={"md"}>
       <Center>
         <Stack align="center" justify="center">
           <TablerIcon name="photoCancel" size={80} opacity={0.5} />

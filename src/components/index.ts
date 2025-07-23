@@ -1,2 +1,2 @@
-export * from "./Banner/PropertyChartBanner";
+export { PropertyChartBanner } from "./Banner";
 export { default as PropertyQuickActions } from "./PropertyQuickActions";
