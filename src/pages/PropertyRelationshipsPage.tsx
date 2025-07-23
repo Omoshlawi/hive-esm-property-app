@@ -8,15 +8,15 @@ import {
   When,
 } from "@hive/esm-core-components";
 import { PiletApi } from "@hive/esm-shell-app";
-import React from "react";
-import { useRelatedProperties, useRelationships } from "../hooks";
-import { Link, useParams } from "react-router-dom";
-import { ColumnDef } from "@tanstack/react-table";
-import { RelatedProperty, Relationship } from "../types";
 import { ActionIcon, Button, Group, Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
-import RelationshipForm from "../forms/RelationshipForm";
 import { IconPlus } from "@tabler/icons-react";
+import { ColumnDef } from "@tanstack/react-table";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import RelationshipForm from "../forms/RelationshipForm";
+import { useRelatedProperties } from "../hooks";
+import { RelatedProperty, Relationship } from "../types";
 
 type PropertyRelationshipsPageProps = Pick<PiletApi, "launchWorkspace"> & {};
 
