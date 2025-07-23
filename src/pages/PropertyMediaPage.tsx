@@ -20,12 +20,15 @@ import { filesize } from "filesize";
 import React from "react";
 import { useParams } from "react-router-dom";
 import MediaGridView from "../components/MediaGridView";
-import PropertyGalaryForm from "../forms/PropertyGalaryForm";
+import PropertyGalaryForm from "../forms/media/PropertyGalaryForm";
 import { usePropertyMedia } from "../hooks";
-import { PropertyMedia } from "../types";
-type PropertyMediaPageProps = {};
+import { PropertyMedia, PropsWithLaunchWorkspace } from "../types";
+import UpdateMediaMetadataForm from "../forms/media/UpdateMediaMetadataForm";
+type PropertyMediaPageProps = PropsWithLaunchWorkspace & {};
 
-const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
+const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
+  launchWorkspace,
+}) => {
   const { propertyId } = useParams<{ propertyId: string }>();
   const propertyMediaAsync = usePropertyMedia(propertyId, "IMAGE");
   const title = "Property Media";
@@ -40,6 +43,17 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
         />
       ),
     });
+  };
+
+  const handleUpdate = (media: PropertyMedia) => {
+    const dispose = launchWorkspace(
+      <UpdateMediaMetadataForm
+        propertyId={propertyId}
+        media={media}
+        onClose={() => dispose()}
+      />,
+      { title: "Update Media" }
+    );
   };
   const handleDelete = (media: PropertyMedia) => {
     openConfirmModal({
@@ -71,20 +85,30 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
             const property = row.original;
             return (
               <Group>
-                <Group>
-                  <ActionIcon
-                    variant="outline"
-                    aria-label="Settings"
-                    color="red"
-                    onClick={() => handleDelete(property)}
-                  >
-                    <TablerIcon
-                      name="trash"
-                      style={{ width: "70%", height: "70%" }}
-                      stroke={1.5}
-                    />
-                  </ActionIcon>
-                </Group>
+                <ActionIcon
+                  variant="outline"
+                  aria-label="edit"
+                  color="teal"
+                  onClick={() => handleUpdate(property)}
+                >
+                  <TablerIcon
+                    name="edit"
+                    style={{ width: "70%", height: "70%" }}
+                    stroke={1.5}
+                  />
+                </ActionIcon>
+                <ActionIcon
+                  variant="outline"
+                  aria-label="Settings"
+                  color="red"
+                  onClick={() => handleDelete(property)}
+                >
+                  <TablerIcon
+                    name="trash"
+                    style={{ width: "70%", height: "70%" }}
+                    stroke={1.5}
+                  />
+                </ActionIcon>
               </Group>
             );
           },
@@ -105,7 +129,12 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({}) => {
         </Button>
       )}
       views={{
-        grid: (table) => <MediaGridView media={table.options.data} />,
+        grid: (table) => (
+          <MediaGridView
+            media={table.options.data}
+            launchWorkspace={launchWorkspace}
+          />
+        ),
       }}
       renderViewTabItem={(view) => {
         if (view === "table")
@@ -166,6 +195,8 @@ const columns: ColumnDef<PropertyMedia>[] = [
       return (
         <Button
           variant="transparent"
+          p={0}
+          m={0}
           onClick={() =>
             openModal({
               fullScreen: true,
@@ -180,7 +211,7 @@ const columns: ColumnDef<PropertyMedia>[] = [
             })
           }
         >
-          {(media.url.split("/") as any)?.at(-1)}
+          {media?.title ?? (media.url.split("/") as any)?.at(-1)}
         </Button>
       );
     },

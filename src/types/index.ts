@@ -4,6 +4,7 @@ import {
   PropertySchema,
   RelationshipSchema,
 } from "../utils/validation";
+import { PiletApi } from "@hive/esm-shell-app";
 
 export type PropertyMediaFormData = z.infer<typeof PropertyMediaSchema>;
 export type PropertyFormData = z.infer<typeof PropertySchema>;
@@ -227,3 +228,6 @@ export interface PropertyStatus {
   reason: any;
   createdAt: string;
 }
+
+
+export type PropsWithLaunchWorkspace = Pick<PiletApi, "launchWorkspace">

@@ -33,9 +33,13 @@ export function setup(app: PiletApi) {
     () => <PropertyRelationships launchWorkspace={app.launchWorkspace} />,
     { layout: "propertyChart" }
   );
-  app.registerPage("/dashboard/properties/:propertyId/galary", PropertyMedia, {
-    layout: "propertyChart",
-  });
+  app.registerPage(
+    "/dashboard/properties/:propertyId/galary",
+    () => <PropertyMedia launchWorkspace={app.launchWorkspace} />,
+    {
+      layout: "propertyChart",
+    }
+  );
   app.registerMenu(
     ({ onClose }: any) => (
       <OrganizationContextHeaderLink

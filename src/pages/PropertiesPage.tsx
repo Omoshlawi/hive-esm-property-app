@@ -172,6 +172,12 @@ const columns: ColumnDef<Property>[] = [
     size: 0,
   },
   {
+    accessorKey: "propertyNumber",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Property Number" />;
+    },
+  },
+  {
     accessorKey: "name",
     header: "Property",
     cell({ row, getValue }) {

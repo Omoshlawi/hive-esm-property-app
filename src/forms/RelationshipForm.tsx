@@ -1,27 +1,18 @@
+import { handleApiErrors, mutate } from "@hive/esm-core-api";
+import { InputSkeleton, When } from "@hive/esm-core-components";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Alert, Button, Group, Loader, Select, Stack } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
+import { showNotification } from "@mantine/notifications";
 import React, { FC } from "react";
-import { PropertyRelationshipFormData, Relationship } from "../types";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   useFilteredProperties,
   usePropertiesApi,
   useRelationshipTypes,
 } from "../hooks";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { PropertyRelationshipFormData, Relationship } from "../types";
 import { RelationshipSchema } from "../utils/validation";
-import { showNotification } from "@mantine/notifications";
-import { handleApiErrors, mutate } from "@hive/esm-core-api";
-import { InputSkeleton, When } from "@hive/esm-core-components";
-import { DateInput } from "@mantine/dates";
-import {
-  Stack,
-  Select,
-  TextInput,
-  MultiSelect,
-  Group,
-  Button,
-  Alert,
-  Loader,
-} from "@mantine/core";
 
 type RelationshipFormProps = {
   propertyId: string;
@@ -181,8 +172,9 @@ const RelationshipForm: FC<RelationshipFormProps> = ({
                   rightSection={
                     propertiesAsync.isLoading && <Loader size={16} />
                   }
+                  searchValue={filters.search}
                   onSearchChange={(search) => {
-                    if (search) setFilters({ search });
+                    setFilters({ search });
                   }}
                 />
               )}
