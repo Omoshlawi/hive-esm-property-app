@@ -63,7 +63,7 @@ export function setup(app: PiletApi) {
         />
       );
     },
-    { type: "propertyChart" as any }
+    { type: "propertyChart" as any, order: 0 }
   );
   app.registerMenu(
     ({ onClose }: any) => {

@@ -994,7 +994,7 @@
 
 "@hive/esm-shell-app@../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz":
   version "1.0.0"
-  resolved "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz#c6301ccb170d91c7bd63af85aa4ea0de7d8c015c"
+  resolved "../hive-esm-core/packages/esm-shell-app/dist/emulator/hive-esm-shell-app-1.0.0.tgz#5bcadef3509a9086f5156e760ed1be644d8144aa"
 
 "@hookform/resolvers@5.0.1":
   version "5.0.1"

@@ -13,6 +13,7 @@ type RenderProps = {
     component: React.JSX.Element;
     meta: {
       type: string;
+      order?: number;
     };
   }[];
 };
@@ -45,6 +46,11 @@ const PropertyChartLayout: React.FC<PropertyChartLayoutProps> = ({
         renderChildren: ({ menuItems, toggleDrawerOpen }: RenderProps) => {
           const menu = menuItems
             .filter((menu) => menu.meta.type === "propertyChart")
+            .sort((a, b) => {
+              const ma = a.meta.order ?? Number.MAX_SAFE_INTEGER;
+              const mb = b.meta.order ?? Number.MAX_SAFE_INTEGER;
+              return ma - mb;
+            })
             .map((m) => m.component);
           return (
             <>
