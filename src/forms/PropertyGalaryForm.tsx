@@ -34,35 +34,37 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
   const handleUpload = async () => {
     try {
       setLoading(true);
-      const uploaded = await uploadFiles({
-        files: { images: files },
-        path: "galary",
-      });
-      const _files = uploaded["images"];
-      const media = await Promise.allSettled(
-        _files.map(async (f) => {
-          return await addPropertyMedia(propertyId, {
-            type: "IMAGE",
-            url: f.path,
-            metadata: {
-              memeType: f.memeType,
-              size: Number(f.bytesSize),
-              id: f.id,
-            },
-          });
-        })
-      );
-      const succesfull = media.filter((m) => m.status === "fulfilled");
-      const failed = media.filter((m) => m.status === "rejected");
-      showNotification({
-        title: `Upload complete`,
-        message: `${succesfull.length} out of ${media.length} Uploaded succesfully`,
-        color: "green",
-        position: "top-right",
-      });
-      onSuccess?.(succesfull.map((s) => s.value));
-      mutateProperties();
-      onClose?.();
+      // const uploaded = await uploadFiles({
+      //   files: { images: files },
+      //   uploadTo: "galary",
+      //   purpose: "property_image"
+
+      // });
+      // const _files = uploaded["images"];
+      // const media = await Promise.allSettled(
+      //   _files.map(async (f) => {
+      //     return await addPropertyMedia(propertyId, {
+      //       type: "IMAGE",
+      //       url: f.path,
+      //       metadata: {
+      //         memeType: f.memeType,
+      //         size: Number(f.bytesSize),
+      //         id: f.id,
+      //       },
+      //     });
+      //   })
+      // );
+      // const succesfull = media.filter((m) => m.status === "fulfilled");
+      // const failed = media.filter((m) => m.status === "rejected");
+      // showNotification({
+      //   title: `Upload complete`,
+      //   message: `${succesfull.length} out of ${media.length} Uploaded succesfully`,
+      //   color: "green",
+      //   position: "top-right",
+      // });
+      // onSuccess?.(succesfull.map((s) => s.value));
+      // mutateProperties();
+      // onClose?.();
     } catch (error) {
       const e = handleApiErrors(error);
       if (e.detail) {

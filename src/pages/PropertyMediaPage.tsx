@@ -1,6 +1,7 @@
 import { getHiveFileUrl } from "@hive/esm-core-api";
 import {
   DataTableColumnHeader,
+  launchWorkspace,
   StateFullDataTable,
   TablerIcon,
 } from "@hive/esm-core-components";
@@ -21,14 +22,12 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import MediaGridView from "../components/MediaGridView";
 import PropertyGalaryForm from "../forms/media/PropertyGalaryForm";
-import { usePropertyMedia } from "../hooks";
-import { PropertyMedia, PropsWithLaunchWorkspace } from "../types";
 import UpdateMediaMetadataForm from "../forms/media/UpdateMediaMetadataForm";
-type PropertyMediaPageProps = PropsWithLaunchWorkspace & {};
+import { usePropertyMedia } from "../hooks";
+import { PropertyMedia } from "../types";
+type PropertyMediaPageProps = {};
 
-const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
-  launchWorkspace,
-}) => {
+const PropertyMediaPage: React.FC<PropertyMediaPageProps> = () => {
   const { propertyId } = useParams<{ propertyId: string }>();
   const propertyMediaAsync = usePropertyMedia(propertyId, "IMAGE");
   const title = "Property Media";
@@ -132,7 +131,6 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = ({
         grid: (table) => (
           <MediaGridView
             media={table.options.data}
-            launchWorkspace={launchWorkspace}
           />
         ),
       }}

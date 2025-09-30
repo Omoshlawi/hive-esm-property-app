@@ -228,6 +228,3 @@ export interface PropertyStatus {
   reason: any;
   createdAt: string;
 }
-
-
-export type PropsWithLaunchWorkspace = Pick<PiletApi, "launchWorkspace">

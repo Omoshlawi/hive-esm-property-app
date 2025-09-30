@@ -1,10 +1,10 @@
 import {
   DashboardPageHeader,
   DataTableColumnHeader,
+  launchWorkspace,
   StateFullDataTable,
   TablerIcon,
 } from "@hive/esm-core-components";
-import { PiletApi } from "@hive/esm-shell-app";
 import {
   ActionIcon,
   Badge,
@@ -25,9 +25,7 @@ import { useProperties } from "../hooks";
 import { Property } from "../types";
 import { getStatusColor, getStatusVariant } from "../utils/helpers";
 
-type PropertiesPageProps = Pick<PiletApi, "launchWorkspace"> & {};
-
-const PropertiesPage: React.FC<PropertiesPageProps> = ({ launchWorkspace }) => {
+const PropertiesPage: React.FC = () => {
   const propertiesAsync = useProperties();
 
   const handleAddOrupdate = (property?: Property) => {

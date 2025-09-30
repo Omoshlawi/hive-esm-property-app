@@ -1,18 +1,23 @@
 import useSWR from "swr";
 import { Property, PropertyMedia } from "../types";
-import { APIFetchResponse, constructUrl, useSession } from "@hive/esm-core-api";
+import { APIFetchResponse, Auth, constructUrl } from "@hive/esm-core-api";
 
 export const useProperties = (params?: Record<string, any>) => {
-  const session = useSession();
+  const {
+    data: { session },
+    isPending,
+    error: sessionError,
+  } = Auth.client.useSession();
   const path = constructUrl("/properties", {
-    organizationContext: session.currentOrganization,
+    organizationContext: session?.activeOrganizationId,
   });
-  const { data, error, isLoading, mutate } =
-    useSWR<APIFetchResponse<{ results: Property[] }>>(path);
+  const { data, error, isLoading, mutate } = useSWR<
+    APIFetchResponse<{ results: Property[] }>
+  >(session.activeOrganizationId ? path : null);
   return {
     properties: data?.data?.results ?? [],
-    isLoading,
-    error,
+    isLoading: isLoading || isPending,
+    error: error ?? sessionError,
     mutate,
   };
 };

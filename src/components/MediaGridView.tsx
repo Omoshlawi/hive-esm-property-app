@@ -19,17 +19,15 @@ import {
 } from "@tabler/icons-react";
 import { filesize } from "filesize";
 import React from "react";
-import { PropertyMedia, PropsWithLaunchWorkspace } from "../types";
+import { PropertyMedia } from "../types";
 import UpdateMediaMetadataForm from "../forms/media/UpdateMediaMetadataForm";
+import { launchWorkspace } from "@hive/esm-core-components";
 
-type MediaGridViewProps = PropsWithLaunchWorkspace & {
+type MediaGridViewProps = {
   media: Array<PropertyMedia>;
 };
 
-const MediaGridView: React.FC<MediaGridViewProps> = ({
-  media,
-  launchWorkspace,
-}) => {
+const MediaGridView: React.FC<MediaGridViewProps> = ({ media }) => {
   const handleUpdate = (media: PropertyMedia) => {
     const dispose = launchWorkspace(
       <UpdateMediaMetadataForm

@@ -1,32 +1,29 @@
+import { handleApiErrors } from "@hive/esm-core-api";
+import { launchWorkspace } from "@hive/esm-core-components";
 import { Alert, Menu, Skeleton, Stack } from "@mantine/core";
+import { closeModal, openModal } from "@mantine/modals";
+import { showNotification, updateNotification } from "@mantine/notifications";
 import {
   IconArchive,
   IconCheck,
   IconEdit,
   IconExclamationCircle,
-  IconImageInPicture,
   IconPhoto,
   IconTrash,
   IconUpload,
 } from "@tabler/icons-react";
 import React, { FC } from "react";
+import PropertyForm from "../forms/PropertyForm";
+import ThumbnailUploadForm from "../forms/ThumbnailUploadForm";
 import {
   useChartCurrentProperty,
   usePropertiesApi,
   useProperty,
 } from "../hooks";
-import { PiletApi } from "@hive/esm-shell-app";
-import PropertyForm from "../forms/PropertyForm";
-import { handleApiErrors } from "@hive/esm-core-api";
-import { closeModal, openModal, updateModal } from "@mantine/modals";
-import ThumbnailUploadForm from "../forms/ThumbnailUploadForm";
-import { showNotification, updateNotification } from "@mantine/notifications";
 
-type PropertyQuickActionsProps = Pick<PiletApi, "launchWorkspace"> & {};
+type PropertyQuickActionsProps = {};
 
-const PropertyQuickActions: FC<PropertyQuickActionsProps> = ({
-  launchWorkspace,
-}) => {
+const PropertyQuickActions: FC<PropertyQuickActionsProps> = () => {
   const propertyId = useChartCurrentProperty();
   const { submitPropertyForReview, mutateProperties, approvePendingProperty } =
     usePropertiesApi();

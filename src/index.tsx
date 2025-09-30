@@ -2,6 +2,7 @@ import { HeaderLink } from "@hive/esm-core-components";
 import type { PiletApi } from "@hive/esm-shell-app";
 import * as React from "react";
 import { PropertyChartBanner, PropertyQuickActions } from "./components";
+import { OrganizationContextHeaderLink } from "./components/links";
 import { useChartCurrentProperty } from "./hooks";
 import { PropertyChartLayout } from "./layouts";
 import {
@@ -10,7 +11,6 @@ import {
   PropertyMedia,
   PropertyRelationships,
 } from "./pages";
-import { OrganizationContextHeaderLink } from "./components/links";
 
 export function setup(app: PiletApi) {
   app.registerPageLayout("propertyChart", ({ children }) => (
@@ -18,24 +18,22 @@ export function setup(app: PiletApi) {
       {children}
     </PropertyChartLayout>
   ));
-  app.registerPage(
-    "/dashboard/properties",
-    () => <PropertiesDashboard launchWorkspace={app.launchWorkspace} />,
-    { layout: "dashboard" }
-  );
+  app.registerPage("/dashboard/properties", () => <PropertiesDashboard />, {
+    layout: "dashboard",
+  });
   app.registerPage(
     "/dashboard/properties/:propertyId",
-    () => <PropertyDetail launchWorkspace={app.launchWorkspace} />,
+    () => <PropertyDetail />,
     { layout: "propertyChart" }
   );
   app.registerPage(
     "/dashboard/properties/:propertyId/relationships",
-    () => <PropertyRelationships launchWorkspace={app.launchWorkspace} />,
+    () => <PropertyRelationships />,
     { layout: "propertyChart" }
   );
   app.registerPage(
     "/dashboard/properties/:propertyId/galary",
-    () => <PropertyMedia launchWorkspace={app.launchWorkspace} />,
+    () => <PropertyMedia />,
     {
       layout: "propertyChart",
     }
@@ -98,8 +96,6 @@ export function setup(app: PiletApi) {
   );
   app.registerExtension(
     "property-chart-banner-actions-extension-slot",
-    ({ params }) => (
-      <PropertyQuickActions {...params} launchWorkspace={app.launchWorkspace} />
-    )
+    ({ params }) => <PropertyQuickActions {...params} />
   );
 }

@@ -1,5 +1,9 @@
-import { EmptyState, ErrorState, When } from "@hive/esm-core-components";
-import { PiletApi } from "@hive/esm-shell-app";
+import {
+  EmptyState,
+  ErrorState,
+  launchWorkspace,
+  When,
+} from "@hive/esm-core-components";
 import {
   Badge,
   Card,
@@ -28,10 +32,7 @@ import {
 } from "../components/overview";
 import { useProperty } from "../hooks";
 
-type PropertyDetailPageProps = Pick<PiletApi, "launchWorkspace"> & {};
-const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
-  launchWorkspace,
-}) => {
+const PropertyDetailPage: React.FC = () => {
   const { propertyId } = useParams<{ propertyId: string }>();
   const propertyAsync = useProperty(propertyId);
   return (

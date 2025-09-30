@@ -3,11 +3,11 @@ import {
   DataTableColumnHeader,
   EmptyState,
   ErrorState,
+  launchWorkspace,
   TablerIcon,
   TableSkeleton,
   When,
 } from "@hive/esm-core-components";
-import { PiletApi } from "@hive/esm-shell-app";
 import { ActionIcon, Button, Group, Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { IconPlus } from "@tabler/icons-react";
@@ -18,11 +18,11 @@ import RelationshipForm from "../forms/RelationshipForm";
 import { useRelatedProperties } from "../hooks";
 import { RelatedProperty, Relationship } from "../types";
 
-type PropertyRelationshipsPageProps = Pick<PiletApi, "launchWorkspace"> & {};
+type PropertyRelationshipsPageProps = {};
 
-const PropertyRelationshipsPage: React.FC<PropertyRelationshipsPageProps> = ({
-  launchWorkspace,
-}) => {
+const PropertyRelationshipsPage: React.FC<
+  PropertyRelationshipsPageProps
+> = ({}) => {
   const { propertyId } = useParams<{ propertyId: string }>();
   const relationshipAsync = useRelatedProperties(propertyId);
   const handleAddUpdate = (relationship?: Relationship) => {
