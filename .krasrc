@@ -1,0 +1,13 @@
+{
+  "injectors": {
+    "proxy": {
+      "active": true,
+      "options": {
+        "changeOrigin": true
+      }
+    }
+  },
+  "map": {
+    "/api": "http://localhost:8090/api"
+  }
+}
