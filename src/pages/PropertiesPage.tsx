@@ -11,9 +11,12 @@ import {
   Box,
   Button,
   Group,
+  Menu,
+  Paper,
   Stack,
   Text,
   useComputedColorScheme,
+  useMantineTheme,
 } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { ColumnDef } from "@tanstack/react-table";
@@ -21,12 +24,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropertyStatusHistory from "../components/PropertyStatusHistory";
 import PropertyForm from "../forms/PropertyForm";
-import { useProperties } from "../hooks";
+import { useProperties, usePropertiesApi } from "../hooks";
 import { Property } from "../types";
-import { getStatusColor, getStatusVariant } from "../utils/helpers";
+import {
+  formatAddress,
+  getStatusColor,
+  getStatusVariant,
+} from "../utils/helpers";
+import AddressFields from "../components/AddressFields";
+import { confirmDelete } from "../utils/utils";
 
 const PropertiesPage: React.FC = () => {
   const propertiesAsync = useProperties();
+  const { deleteProperty } = usePropertiesApi();
+  const colorScheme = useComputedColorScheme();
+  const theme = useMantineTheme();
+  const bgColor =
+    colorScheme === "light" ? theme.colors.gray[0] : theme.colors.dark[6];
 
   const handleAddOrupdate = (property?: Property) => {
     const dispose = launchWorkspace(
@@ -37,26 +51,8 @@ const PropertiesPage: React.FC = () => {
       />,
       {
         title: property ? "Update Property" : "Add Property",
-        width: "wide",
       }
     );
-  };
-  const handleDelete = (property: Property) => {
-    openConfirmModal({
-      title: "Delete Property",
-      children: (
-        <Text>
-          Are you sure you want to delete this role.This action is destructive
-          and will delete all data related to role
-        </Text>
-      ),
-      labels: { confirm: "Delete property", cancel: "No don't delete it" },
-      confirmProps: { color: "red" },
-      centered: true,
-      onConfirm() {
-        // TODO Implement delete
-      },
-    });
   };
 
   const actions: ColumnDef<Property> = {
@@ -65,34 +61,38 @@ const PropertiesPage: React.FC = () => {
     cell({ row }) {
       const property = row.original;
       return (
-        <Group>
-          <Group>
-            <ActionIcon
-              variant="outline"
-              aria-label="Settings"
-              color="green"
+        <Menu shadow="md" width={200} position="bottom-end">
+          <Menu.Target>
+            <ActionIcon variant="subtle" aria-label="actions">
+              <TablerIcon
+                name="dots"
+                style={{ width: "70%", height: "70%" }}
+                stroke={1.5}
+              />
+            </ActionIcon>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Label>Actions</Menu.Label>
+            <Menu.Divider />
+            <Menu.Item
+              leftSection={<TablerIcon name="edit" size={14} />}
               onClick={() => handleAddOrupdate(property)}
             >
-              <TablerIcon
-                name="edit"
-                style={{ width: "70%", height: "70%" }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-            <ActionIcon
-              variant="outline"
-              aria-label="Settings"
-              color="red"
-              onClick={() => handleDelete(property)}
+              Edit
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<TablerIcon name="trash" size={14} />}
+              onClick={() =>
+                confirmDelete("property", async () => {
+                  await deleteProperty(property.id, true);
+                })
+              }
             >
-              <TablerIcon
-                name="trash"
-                style={{ width: "70%", height: "70%" }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-          </Group>
-        </Group>
+              Delete
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       );
     },
   };
@@ -106,16 +106,18 @@ const PropertiesPage: React.FC = () => {
           icon={"building"}
         />
       </Box>
-      <StateFullDataTable
-        {...propertiesAsync}
-        data={propertiesAsync.properties}
-        withColumnViewOptions
-        onAdd={() => handleAddOrupdate()}
-        columns={[...columns, actions]}
-        renderExpandedRow={({ original: { id } }) => (
-          <PropertyStatusHistory propertyId={id} />
-        )}
-      />
+      <Paper bg={bgColor} p={"md"}>
+        <StateFullDataTable
+          {...propertiesAsync}
+          data={propertiesAsync.properties}
+          withColumnViewOptions
+          onAdd={() => handleAddOrupdate()}
+          columns={[...columns, actions]}
+          renderExpandedRow={({ original: { id } }) => (
+            <PropertyStatusHistory propertyId={id} />
+          )}
+        />
+      </Paper>
     </Stack>
   );
 };
@@ -190,21 +192,29 @@ const columns: ColumnDef<Property>[] = [
     },
   },
   {
-    accessorKey: "address.county",
+    id: "address",
     header({ column }) {
-      return <DataTableColumnHeader column={column} title="County" />;
+      return <DataTableColumnHeader column={column} title="Address" />;
     },
+    cell: ({ row: { original: property } }) => (
+      <AddressFields
+        addressId={property.addressId}
+        display={(address) => `${address.address1}, ${address.address2}`}
+      />
+    ),
   },
   {
-    accessorKey: "address.subCounty",
+    accessorKey: "isVirtual",
     header({ column }) {
-      return <DataTableColumnHeader column={column} title="Subcounty" />;
+      return <DataTableColumnHeader column={column} title="Type" />;
     },
-  },
-  {
-    accessorKey: "address.ward",
-    header({ column }) {
-      return <DataTableColumnHeader column={column} title="Ward" />;
+    cell({ getValue }) {
+      const isVirtual = getValue<Property["isVirtual"]>();
+      return (
+        <Badge color={isVirtual ? "red" : undefined} variant={"dot"}>
+          {isVirtual ? "Virtual" : "Physical"}
+        </Badge>
+      );
     },
   },
   {

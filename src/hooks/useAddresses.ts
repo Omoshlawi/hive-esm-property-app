@@ -1,12 +1,12 @@
-import { APIFetchResponse, constructUrl, useSession } from "@hive/esm-core-api";
+import { APIFetchResponse, constructUrl } from "@hive/esm-core-api";
 import useSWR from "swr";
 import { Address, County } from "../types";
 
 export const useAddresses = (filters: Record<string, any>) => {
-  const session = useSession();
+  // const session = useSession();
   const path = constructUrl("/addresses", {
     ...filters,
-    organizationContext: session.currentOrganization,
+    // organization: session.currentOrganization,
   });
   const { data, error, isLoading, mutate } =
     useSWR<APIFetchResponse<{ results: Address[] }>>(path);
@@ -24,11 +24,24 @@ export const usePlaces = (filters: Record<string, any>) => {
     ...filters,
   });
   const { data, error, isLoading, mutate } =
-    useSWR<APIFetchResponse<{ results: County[] }>>(path);
+    useSWR<APIFetchResponse<{ results: County[] }>>(path);  
   return {
     counties: data?.data?.results ?? [],
     isLoading,
     error,
+    mutate,
+  };
+};
+
+
+export const useAddress = (id: string) => {
+  const url = constructUrl(`/addresses/${id}`);
+  const { data, error, isLoading, mutate } =
+    useSWR<APIFetchResponse<Address>>(url);
+  return {
+    address: data?.data,
+    error,
+    isLoading,
     mutate,
   };
 };

@@ -101,12 +101,12 @@ const PropertyDetailPage: React.FC = () => {
                           <Text fw={500}>Location</Text>
                         </Group>
                         <Text size="sm" c="dimmed" pl="lg">
-                          {property.address
+                          {/* {property.address
                             ? `${property.address.county || ""} ${
                                 property.address.subCounty || ""
                               } ${property.address.ward || ""}`.trim() ||
                               "Address not set"
-                            : "Address not set"}
+                            : "Address not set"} */}
                         </Text>
                       </Stack>
 

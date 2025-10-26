@@ -20,25 +20,22 @@ export const PropertyMediaSchema = z.object({
 
 // Property
 export const PropertySchema = z.object({
-  name: z.string().min(1, "Required"),
-  description: z.string().optional(),
+  name: z.string().nonempty("Required"),
   thumbnail: z.string().optional(),
-  isVirtual: z.boolean(),
+  isVirtual: z.boolean().optional(),
   attributes: z
     .array(
       z.object({
-        attributeId: z
-          .string()
-          .min(1, "Required")
-          .uuid("Invalid attribute type"),
+        attributeId: z.string().uuid(),
         value: z.string().min(1, "Required"),
       })
     )
     .optional(),
-  addressId: z.string().min(1, "Required").uuid("invalid address"),
+  addressId: z.string().uuid("invalid address"),
   media: z.array(PropertyMediaSchema).optional(),
   amenities: z.array(z.string().uuid()).optional(),
   categories: z.array(z.string().uuid()).optional(),
+  description: z.string().optional(),
 });
 
 // Property attribute

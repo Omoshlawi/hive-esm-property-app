@@ -1,9 +1,14 @@
-import { HeaderLink, withUserAccess } from "@hive/esm-core-components";
-import React from "react";
+import {
+  HeaderLink,
+  withNoOrganizationContextRequired,
+  withRequiredOrganizationContext,
+} from "@hive/esm-core-components";
 
-export const OrganizationContextHeaderLink = withUserAccess(HeaderLink, {
-  isAuthenticated: (session) =>
-    session.isAuthenticated && Boolean(session.currentOrganization),
-  requiresAuth: true,
-  fallbackComponent: <></>,
+export const OrganizationContextHeaderLink = withRequiredOrganizationContext(
+  HeaderLink,
+  { noOrganizationAction: { type: "hide" } }
+);
+
+export const AdminHeaderLink = withNoOrganizationContextRequired(HeaderLink, {
+  hasOrganizationAction: { type: "hide" },
 });

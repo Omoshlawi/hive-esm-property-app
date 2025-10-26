@@ -20,30 +20,6 @@ export interface Organization {
   voided: boolean;
 }
 
-export interface Address {
-  id: string;
-  name: string;
-  description: string;
-  country: string;
-  county: string;
-  subCounty: string;
-  ward: string;
-  village?: string;
-  landmark: string;
-  postalCode?: string;
-  latitude?: string;
-  longitude?: string;
-  ownerUserId: string;
-  ownerUser: string;
-  organizationId?: string;
-  organization?: Organization;
-  metadata?: Record<string, any>;
-  createdBy: string;
-  voided: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface Property {
   id: string;
   name: string;
@@ -227,4 +203,35 @@ export interface PropertyStatus {
   changedBy: string;
   reason: any;
   createdAt: string;
+}
+
+export interface Address {
+  id: string;
+  userId?: string;
+  organizationId?: string;
+  type: string;
+  label?: string;
+  address1: string;
+  address2: string;
+  landmark?: string;
+  level1: string;
+  level2?: string;
+  level3?: string;
+  level4?: string;
+  level5?: string;
+  cityVillage?: string;
+  stateProvince?: string;
+  country: string;
+  postalCode?: string;
+  latitude?: number;
+  longitude?: number;
+  plusCode?: string;
+  startDate: string;
+  endDate?: string;
+  preferred: boolean;
+  formatted?: string;
+  localeFormat: { [key: string]: string };
+  createdAt: string;
+  updatedAt: string;
+  voided: boolean;
 }

@@ -17,33 +17,32 @@ import {
   Relationship,
 } from "../types";
 
+const mutateProperties = () => mutate("/properties");
+
 const addProperty = async (data: PropertyFormData) => {
   const res = await apiFetch<Property>("/properties", {
     method: "POST",
     data,
   });
+  mutateProperties();
   return res.data;
 };
 
-const updateProperty = async (
-  id: string,
-  data: PropertyFormData,
-  method: "PUT" | "PATCH" = "PATCH"
-) => {
+const updateProperty = async (id: string, data: PropertyFormData) => {
   const res = await apiFetch<Property>(`/properties/${id}`, {
-    method: method,
+    method: "PATCH",
     data,
   });
+  mutateProperties();
   return res.data;
 };
 
-const deleteProperty = async (
-  id: string,
-  method: "DELETE" | "PURGE" = "DELETE"
-) => {
+const deleteProperty = async (id: string, purge: boolean = false) => {
   const res = await apiFetch<Property>(`/properties/${id}`, {
-    method: method,
+    method: "DELETE",
+    params: { purge },
   });
+  mutateProperties();
   return res.data;
 };
 
@@ -55,36 +54,39 @@ const addPropertyMedia = async (
     method: "POST",
     data,
   });
+  mutateProperties();
   return res.data;
 };
 
 const updatePropertyMedia = async (
   propertyId: string,
   mediaId: string,
-  data: PropertyMediaFormData,
-  method: "PUT" | "PATCH" = "PATCH"
+  data: PropertyMediaFormData
 ) => {
   const res = await apiFetch<PropertyMedia>(
     `properties/${propertyId}/media/${mediaId}`,
     {
-      method,
+      method: "PATCH",
       data,
     }
   );
+  mutateProperties();
   return res.data;
 };
 
 const deletePropertyMedia = async (
   propertyId: string,
   mediaId: string,
-  method: "DELETE" | "PURGE" = "DELETE"
+  purge: boolean = false
 ) => {
   const res = await apiFetch<PropertyMedia>(
     `properties/${propertyId}/media/${mediaId}`,
     {
-      method,
+      method: "DELETE",
+      params: { purge },
     }
   );
+  mutateProperties();
   return res.data;
 };
 
@@ -101,29 +103,32 @@ const addPropertiesRelationship = async (
     method: "POST",
     data,
   });
+  mutateProperties();
   return res.data;
 };
 const updatePropertiesRelationship = async (
   relationshipId: string,
-  data: PropertyRelationshipFormData,
-  method: "PUT" | "PATCH" = "PATCH"
+  data: PropertyRelationshipFormData
 ) => {
   const res = await apiFetch<Relationship>(`/relationships/${relationshipId}`, {
-    method,
+    method: "PATCH",
     data,
   });
+  mutateProperties();
   return res.data;
 };
 
 const submitPropertyForReview = async (propertyId: string) => {
-  const url = `/properties/${propertyId}/status/submit`;
+  const url = `/properties/${propertyId}/workflow/request-review`;
   const res = await apiFetch<PropertyStatus>(url, { method: "POST" });
+  mutateProperties();
   return res.data;
 };
 
 const approvePendingProperty = async (propertyId: string) => {
-  const url = `/properties/${propertyId}/status/approve`;
+  const url = `/properties/${propertyId}/workflow/approve`;
   const res = await apiFetch<PropertyStatus>(url, { method: "POST" });
+  mutateProperties();
   return res.data;
 };
 export const usePropertiesApi = () => {
@@ -139,7 +144,7 @@ export const usePropertiesApi = () => {
     updatePropertiesRelationship,
     submitPropertyForReview,
     approvePendingProperty,
-    mutateProperties: () => mutate("/properties"),
+    mutateProperties,
   };
 };
 

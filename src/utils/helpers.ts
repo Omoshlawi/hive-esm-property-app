@@ -1,3 +1,5 @@
+import { Address } from "../types";
+
 // Enhanced status color mapping with better visual hierarchy
 export const getStatusColor = (status: string) => {
   switch (status) {
@@ -40,3 +42,19 @@ export const getStatusVariant = (status: string, colorScheme: string) => {
       return colorScheme === "dark" ? "light" : "outline";
   }
 };
+
+export function formatAddress(address: Address): string {
+  const parts = [];
+
+  if (address.address1) parts.push(address.address1);
+  if (address.address2) parts.push(address.address2);
+  if (address.landmark) parts.push(address.landmark);
+  if (address.level4) parts.push(address.level4);
+  if (address.level3) parts.push(address.level3);
+  if (address.level2) parts.push(address.level2);
+  if (address.level1) parts.push(address.level1);
+  if (address.postalCode) parts.push(address.postalCode);
+  if (address.country) parts.push(address.country);
+
+  return parts.join(", ");
+}

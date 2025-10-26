@@ -1,34 +1,34 @@
-import React, { useState } from "react";
-import { Property, PropertyFormData } from "../types";
+import { handleApiErrors } from "@hive/esm-core-api";
+import { InputSkeleton, When } from "@hive/esm-core-components";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  useAddresses,
-  useAmenities,
-  useCategories,
-  usePropertiesApi,
-} from "../hooks";
+  Alert,
+  Button,
+  Checkbox,
+  Group,
+  MultiSelect,
+  Select,
+  Stack,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { IconExclamationCircle } from "@tabler/icons-react";
+import React from "react";
 import {
   Controller,
   FormProvider,
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PropertySchema } from "../utils/validation";
-import { showNotification } from "@mantine/notifications";
-import { handleApiErrors, mutate } from "@hive/esm-core-api";
 import {
-  Stack,
-  TextInput,
-  Group,
-  Button,
-  Textarea,
-  Alert,
-  Select,
-  MultiSelect,
-  Checkbox,
-} from "@mantine/core";
-import { InputSkeleton, When } from "@hive/esm-core-components";
-import { IconExclamationCircle } from "@tabler/icons-react";
+  useAddresses,
+  useAmenities,
+  useCategories,
+  usePropertiesApi,
+} from "../hooks";
+import { Property, PropertyFormData } from "../types";
+import { PropertySchema } from "../utils/validation";
 import PropertyAttributesForm from "./PropertyAttributesForm";
 
 type PropertyFormProps = {
@@ -78,7 +78,6 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
         message: `Property ${property ? "updated" : "created"} successfully`,
         color: "teal",
       });
-      mutate("/properties");
     } catch (error) {
       const e = handleApiErrors<PropertyFormData>(error);
       if (e.detail) {
@@ -166,7 +165,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                       {...field}
                       data={address.map((l) => ({
                         value: l.id,
-                        label: l.name,
+                        label: l.label,
                       }))}
                       label="Address"
                       placeholder="Select from saved addresses"
@@ -178,85 +177,89 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
                 />
               )}
             />
-            <Controller
-              control={form.control}
-              name="amenities"
-              render={({ field, fieldState }) => (
-                <When
-                  asyncState={{
-                    ...amenitiesAsync,
-                    data: amenitiesAsync.amenities,
-                  }}
-                  loading={() => <InputSkeleton />}
-                  error={(e) => (
-                    <Alert
-                      variant="light"
-                      radius={"xs"}
-                      title="Error loading amenities"
-                      color="red"
-                      icon={<IconExclamationCircle />}
-                    >
-                      {handleApiErrors(e).detail}
-                    </Alert>
-                  )}
-                  success={(amenities) => (
-                    <MultiSelect
-                      {...field}
-                      data={amenities.map((l) => ({
-                        value: l.id,
-                        label: l.name,
-                      }))}
-                      hidePickedOptions
-                      label="Amenities"
-                      placeholder="Select amenities"
-                      error={fieldState.error?.message}
-                      nothingFoundMessage="Nothing found..."
-                      searchable
-                    />
-                  )}
-                />
-              )}
-            />
-            <Controller
-              control={form.control}
-              name="categories"
-              render={({ field, fieldState }) => (
-                <When
-                  asyncState={{
-                    ...categoriesAsync,
-                    data: categoriesAsync.categories,
-                  }}
-                  loading={() => <InputSkeleton />}
-                  error={(e) => (
-                    <Alert
-                      variant="light"
-                      radius={"xs"}
-                      title="Error loading categories"
-                      color="red"
-                      icon={<IconExclamationCircle />}
-                    >
-                      {handleApiErrors(e).detail}
-                    </Alert>
-                  )}
-                  success={(categories) => (
-                    <MultiSelect
-                      {...field}
-                      data={categories.map((l) => ({
-                        value: l.id,
-                        label: l.name,
-                      }))}
-                      hidePickedOptions
-                      label="categories"
-                      placeholder="Select categories"
-                      error={fieldState.error?.message}
-                      nothingFoundMessage="Nothing found..."
-                      searchable
-                    />
-                  )}
-                />
-              )}
-            />
-            <PropertyAttributesForm />
+            {!!!property && (
+              <Controller
+                control={form.control}
+                name="amenities"
+                render={({ field, fieldState }) => (
+                  <When
+                    asyncState={{
+                      ...amenitiesAsync,
+                      data: amenitiesAsync.amenities,
+                    }}
+                    loading={() => <InputSkeleton />}
+                    error={(e) => (
+                      <Alert
+                        variant="light"
+                        radius={"xs"}
+                        title="Error loading amenities"
+                        color="red"
+                        icon={<IconExclamationCircle />}
+                      >
+                        {handleApiErrors(e).detail}
+                      </Alert>
+                    )}
+                    success={(amenities) => (
+                      <MultiSelect
+                        {...field}
+                        data={amenities.map((l) => ({
+                          value: l.id,
+                          label: l.name,
+                        }))}
+                        hidePickedOptions
+                        label="Amenities"
+                        placeholder="Select amenities"
+                        error={fieldState.error?.message}
+                        nothingFoundMessage="Nothing found..."
+                        searchable
+                      />
+                    )}
+                  />
+                )}
+              />
+            )}
+            {!!!property && (
+              <Controller
+                control={form.control}
+                name="categories"
+                render={({ field, fieldState }) => (
+                  <When
+                    asyncState={{
+                      ...categoriesAsync,
+                      data: categoriesAsync.categories,
+                    }}
+                    loading={() => <InputSkeleton />}
+                    error={(e) => (
+                      <Alert
+                        variant="light"
+                        radius={"xs"}
+                        title="Error loading categories"
+                        color="red"
+                        icon={<IconExclamationCircle />}
+                      >
+                        {handleApiErrors(e).detail}
+                      </Alert>
+                    )}
+                    success={(categories) => (
+                      <MultiSelect
+                        {...field}
+                        data={categories.map((l) => ({
+                          value: l.id,
+                          label: l.name,
+                        }))}
+                        hidePickedOptions
+                        label="categories"
+                        placeholder="Select categories"
+                        error={fieldState.error?.message}
+                        nothingFoundMessage="Nothing found..."
+                        searchable
+                      />
+                    )}
+                  />
+                )}
+              />
+            )}
+            {!!!property && <PropertyAttributesForm />}
           </Stack>
           <Group gap={1}>
             <Button
