@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { Property, PropertyMedia } from "../types";
-import { APIFetchResponse, Auth, constructUrl } from "@hive/esm-core-api";
+import { APIFetchResponse, Auth, constructUrl } from "@havena/esm-core-api";
 
 export const useProperties = (params?: Record<string, any>) => {
   const {

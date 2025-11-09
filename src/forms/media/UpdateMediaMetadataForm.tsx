@@ -1,4 +1,4 @@
-import { handleApiErrors } from "@hive/esm-core-api";
+import { handleApiErrors } from "@havena/esm-core-api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";

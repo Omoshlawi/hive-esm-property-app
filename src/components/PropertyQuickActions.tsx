@@ -1,5 +1,5 @@
-import { handleApiErrors } from "@hive/esm-core-api";
-import { launchWorkspace } from "@hive/esm-core-components";
+import { handleApiErrors } from "@havena/esm-core-api";
+import { launchWorkspace } from "@havena/esm-core-components";
 import { Alert, Menu, Skeleton, Stack } from "@mantine/core";
 import { closeModal, openModal } from "@mantine/modals";
 import { showNotification, updateNotification } from "@mantine/notifications";

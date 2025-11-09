@@ -6,7 +6,7 @@ import {
   withNoOrganizationContextRequired,
   withRequireAuth,
   withRequiredOrganizationContext,
-} from "@hive/esm-core-components";
+} from "@havena/esm-core-components";
 import ExitOrganizationContext from "../components/ExitOrganizationContext";
 import React from "react";
 

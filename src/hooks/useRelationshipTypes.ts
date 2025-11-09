@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { RelationshipType } from "../types";
-import { APIFetchResponse } from "@hive/esm-core-api";
+import { APIFetchResponse } from "@havena/esm-core-api";
 
 const useRelationshipTypes = () => {
   const path = "/relationship-types";

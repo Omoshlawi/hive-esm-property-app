@@ -1,5 +1,5 @@
-import { handleApiErrors, mutate } from "@hive/esm-core-api";
-import { InputSkeleton, When } from "@hive/esm-core-components";
+import { handleApiErrors, mutate } from "@havena/esm-core-api";
+import { InputSkeleton, When } from "@havena/esm-core-components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, Group, Loader, Select, Stack } from "@mantine/core";
 import { DateInput } from "@mantine/dates";

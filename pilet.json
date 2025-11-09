@@ -2,7 +2,7 @@
   "$schema": "https://docs.piral.io/schemas/pilet-v0.json",
   "schemaVersion": "v2",
   "piralInstances": {
-    "@hive/esm-shell-app": {
+    "@havena/esm-shell-app": {
       "selected": true
     }
   }

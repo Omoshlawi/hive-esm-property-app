@@ -1,4 +1,4 @@
-import { APIFetchResponse, constructUrl } from "@hive/esm-core-api";
+import { APIFetchResponse, constructUrl } from "@havena/esm-core-api";
 import useSWR from "swr";
 import { Address, County } from "../types";
 
@@ -24,7 +24,7 @@ export const usePlaces = (filters: Record<string, any>) => {
     ...filters,
   });
   const { data, error, isLoading, mutate } =
-    useSWR<APIFetchResponse<{ results: County[] }>>(path);  
+    useSWR<APIFetchResponse<{ results: County[] }>>(path);
   return {
     counties: data?.data?.results ?? [],
     isLoading,
@@ -32,7 +32,6 @@ export const usePlaces = (filters: Record<string, any>) => {
     mutate,
   };
 };
-
 
 export const useAddress = (id: string) => {
   const url = constructUrl(`/addresses/${id}`);

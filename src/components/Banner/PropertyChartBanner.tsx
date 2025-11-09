@@ -1,4 +1,4 @@
-import { ContextualBanner, TablerIcon } from "@hive/esm-core-components";
+import { ContextualBanner, TablerIcon } from "@havena/esm-core-components";
 import {
   Badge,
   useComputedColorScheme,
@@ -70,15 +70,15 @@ export function PropertyChartBanner({
           {l.isVirtual && (
             <Tooltip label="This property is not an actual/physical structure or place. It is a group of properties that can be processed as a single entity.">
               <Badge
-              size="sm"
-              color="red"
-              variant="dot"
-              style={{
-                textTransform: "capitalize",
-                fontWeight: 500,
-              }}
+                size="sm"
+                color="red"
+                variant="dot"
+                style={{
+                  textTransform: "capitalize",
+                  fontWeight: 500,
+                }}
               >
-              {"VIRTUAL"}
+                {"VIRTUAL"}
               </Badge>
             </Tooltip>
           )}

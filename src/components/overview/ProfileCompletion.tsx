@@ -69,11 +69,11 @@ const ProfileCompletion: FC<Props> = ({ property }) => {
           <CompletionItem completed={!!property.thumbnail} label="Main Photo" />
           <CompletionItem completed={!!property.address} label="Address" />
           <CompletionItem
-            completed={propertyMedia && propertyMedia.length > 0}
+            completed={propertyMedia && propertyMedia?.length > 0}
             label="Media"
           />
           <CompletionItem
-            completed={property.amenities && property.amenities.length > 0}
+            completed={property.amenities && property.amenities?.length > 0}
             label="Amenities"
           />
         </Stack>
@@ -111,10 +111,10 @@ function calculateCompletionPercentage(
     !!property.description,
     !!property.thumbnail,
     !!property.address,
-    property.media && property.media.length > 0,
-    property.amenities && property.amenities.length > 0,
+    property.media && property.media?.length > 0,
+    property.amenities && property.amenities?.length > 0,
   ];
 
-  const completed = checks.filter(Boolean).length;
-  return Math.round((completed / checks.length) * 100);
+  const completed = checks.filter(Boolean)?.length;
+  return Math.round((completed / checks?.length) * 100);
 }

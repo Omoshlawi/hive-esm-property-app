@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Property } from "../../types";
 import { Button, Card, Center, Image, Stack, Text } from "@mantine/core";
-import { getHiveFileUrl } from "@hive/esm-core-api";
-import { TablerIcon } from "@hive/esm-core-components";
+import { getHiveFileUrl } from "@havena/esm-core-api";
+import { TablerIcon } from "@havena/esm-core-components";
 import { closeModal, openModal } from "@mantine/modals";
 import ThumbnailUploadForm from "../../forms/ThumbnailUploadForm";
 

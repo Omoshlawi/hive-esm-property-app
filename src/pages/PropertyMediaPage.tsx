@@ -1,10 +1,10 @@
-import { getHiveFileUrl } from "@hive/esm-core-api";
+import { getHiveFileUrl } from "@havena/esm-core-api";
 import {
   DataTableColumnHeader,
   launchWorkspace,
   StateFullDataTable,
   TablerIcon,
-} from "@hive/esm-core-components";
+} from "@havena/esm-core-components";
 import {
   ActionIcon,
   Avatar,
@@ -128,11 +128,7 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = () => {
         </Button>
       )}
       views={{
-        grid: (table) => (
-          <MediaGridView
-            media={table.options.data}
-          />
-        ),
+        grid: (table) => <MediaGridView media={table.options.data} />,
       }}
       renderViewTabItem={(view) => {
         if (view === "table")

@@ -4,7 +4,7 @@ import {
   launchWorkspace,
   StateFullDataTable,
   TablerIcon,
-} from "@hive/esm-core-components";
+} from "@havena/esm-core-components";
 import {
   ActionIcon,
   Badge,

@@ -3,7 +3,7 @@ import {
   ErrorState,
   launchWorkspace,
   When,
-} from "@hive/esm-core-components";
+} from "@havena/esm-core-components";
 import {
   Badge,
   Card,
@@ -142,7 +142,7 @@ const PropertyDetailPage: React.FC = () => {
                     </SimpleGrid>
 
                     {/* Room Details */}
-                    {property.attributes.length > 0 && (
+                    {property?.attributes?.length > 0 && (
                       <>
                         <Divider />
                         <Group gap="lg">
@@ -163,8 +163,8 @@ const PropertyDetailPage: React.FC = () => {
               </Grid.Col>
 
               {/* Categories & Amenities */}
-              {(property.categories?.length > 0 ||
-                property.amenities?.length > 0) && (
+              {(property?.categories?.length > 0 ||
+                property?.amenities?.length > 0) && (
                 <Grid.Col span={12}>
                   <Card shadow="sm" padding="lg" radius="md" withBorder>
                     <Stack gap="md">
@@ -174,7 +174,7 @@ const PropertyDetailPage: React.FC = () => {
 
                       <Group gap="lg" align="flex-start">
                         {property.categories &&
-                          property.categories.length > 0 && (
+                          property?.categories?.length > 0 && (
                             <Stack gap="xs" style={{ flex: 1 }}>
                               <Text fw={500} size="sm">
                                 Categories
@@ -191,9 +191,9 @@ const PropertyDetailPage: React.FC = () => {
                                       {category.category?.name}
                                     </Badge>
                                   ))}
-                                {property.categories.length > 5 && (
+                                {property?.categories?.length > 5 && (
                                   <Badge variant="light" color="gray">
-                                    +{property.categories.length - 5} more
+                                    +{property.categories?.length - 5} more
                                   </Badge>
                                 )}
                               </Group>
@@ -201,7 +201,7 @@ const PropertyDetailPage: React.FC = () => {
                           )}
 
                         {property.amenities &&
-                          property.amenities.length > 0 && (
+                          property?.amenities?.length > 0 && (
                             <Stack gap="xs" style={{ flex: 1 }}>
                               <Text fw={500} size="sm">
                                 Amenities
@@ -218,9 +218,9 @@ const PropertyDetailPage: React.FC = () => {
                                       {amenity.amenity?.name}
                                     </Badge>
                                   ))}
-                                {property.amenities.length > 6 && (
+                                {property?.amenities?.length > 6 && (
                                   <Badge variant="outline" color="gray">
-                                    +{property.amenities.length - 6} more
+                                    +{property?.amenities?.length - 6} more
                                   </Badge>
                                 )}
                               </Group>

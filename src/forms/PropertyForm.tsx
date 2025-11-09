@@ -1,5 +1,5 @@
-import { handleApiErrors } from "@hive/esm-core-api";
-import { InputSkeleton, When } from "@hive/esm-core-components";
+import { handleApiErrors } from "@havena/esm-core-api";
+import { InputSkeleton, When } from "@havena/esm-core-components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Alert,

@@ -1,10 +1,10 @@
-import { cleanFiles, handleApiErrors, uploadFiles } from "@hive/esm-core-api";
+import { cleanFiles, handleApiErrors, uploadFile } from "@havena/esm-core-api";
 import { Button, Group, Image, SimpleGrid, Stack, Text } from "@mantine/core";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { showNotification } from "@mantine/notifications";
 import React, { FC, useState } from "react";
 import { usePropertiesApi } from "../hooks";
-import { Property, PropertyMedia } from "../types";
+import { Property } from "../types";
 
 type ThumbnailUploadFormProps = {
   property: Property;
@@ -34,23 +34,26 @@ const ThumbnailUploadForm: FC<ThumbnailUploadFormProps> = ({
   const handleUpload = async () => {
     try {
       setLoading(true);
-      const uploaded = await uploadFiles({
-        files: { image: files },
-        path: "thumbnail",
+      const uploaded = await uploadFile({
+        file: files[0],
+        relatedModelName: "Property",
+        relatedModelId: property.id,
+        purpose: "thumbnail",
+        tags: ["thumbnail", "property", "image"],
       });
-      const _file = uploaded["image"][0];
-
-      const _property = await updateProperty(property.id, {
-        thumbnail: _file.path,
-      });
-      if (property.thumbnail) await cleanFiles([property.thumbnail]);
+      if (uploaded?.blob?.storageUrl) {
+        const updatedProperty = await updateProperty(property.id, {
+          thumbnail: uploaded?.blob?.storageUrl,
+        });
+        if (property.thumbnail) await cleanFiles([property.thumbnail]);
+        onSuccess?.(updatedProperty);
+      }
       showNotification({
         title: `Upload complete`,
         message: `Thumnail Uploaded succesfully`,
         color: "green",
         position: "top-right",
       });
-      onSuccess?.(_property);
       mutateProperties();
       onClose?.();
     } catch (error) {
@@ -82,14 +85,14 @@ const ThumbnailUploadForm: FC<ThumbnailUploadFormProps> = ({
       <Group justify="flex-end">
         <Button
           onClick={() => setFiles([])}
-          disabled={files.length === 0 || loading}
+          disabled={files?.length === 0 || loading}
           variant="default"
         >
           Clear
         </Button>
         <Button
           onClick={handleUpload}
-          disabled={files.length === 0 || loading}
+          disabled={files?.length === 0 || loading}
           loading={loading}
         >
           Upload

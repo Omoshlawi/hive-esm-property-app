@@ -1,4 +1,4 @@
-import { cleanFiles, handleApiErrors, uploadFiles } from "@hive/esm-core-api";
+import { cleanFiles, handleApiErrors, uploadFiles } from "@havena/esm-core-api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Accordion,
@@ -106,7 +106,7 @@ const PropertyGalaryForm: FC<ListingGalaryFormProps> = ({
       const succesfull = media.filter((m) => m.status === "fulfilled");
       showNotification({
         title: `Upload complete`,
-        message: `${succesfull.length} out of ${media.length} Uploaded succesfully`,
+        message: `${succesfull?.length} out of ${media?.length} Uploaded succesfully`,
         color: "green",
         position: "top-right",
       });
@@ -137,7 +137,7 @@ const PropertyGalaryForm: FC<ListingGalaryFormProps> = ({
             onDrop={(f) => {
               setFiles(f);
               const _f = Array.from<PropertyMediaFormData>({
-                length: f.length,
+                length: f?.length,
               }).fill({ type: "IMAGE" });
               form.setValue("media", _f);
             }}
@@ -192,14 +192,14 @@ const PropertyGalaryForm: FC<ListingGalaryFormProps> = ({
                 form.setValue("media", []);
                 setFiles([]);
               }}
-              disabled={files.length === 0 || loading}
+              disabled={files?.length === 0 || loading}
               variant="default"
             >
               Clear
             </Button>
             <Button
               onClick={handleUpload}
-              disabled={files.length === 0 || loading}
+              disabled={files?.length === 0 || loading}
               loading={loading}
             >
               Upload

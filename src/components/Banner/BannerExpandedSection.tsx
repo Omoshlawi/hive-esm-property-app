@@ -1,4 +1,4 @@
-import { TablerIcon, TablerIconName } from "@hive/esm-core-components";
+import { TablerIcon, TablerIconName } from "@havena/esm-core-components";
 import {
   Card,
   Chip,

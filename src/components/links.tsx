@@ -2,7 +2,7 @@ import {
   HeaderLink,
   withNoOrganizationContextRequired,
   withRequiredOrganizationContext,
-} from "@hive/esm-core-components";
+} from "@havena/esm-core-components";
 
 export const OrganizationContextHeaderLink = withRequiredOrganizationContext(
   HeaderLink,

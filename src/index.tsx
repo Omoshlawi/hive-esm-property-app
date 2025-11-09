@@ -1,5 +1,5 @@
-import { HeaderLink } from "@hive/esm-core-components";
-import type { PiletApi } from "@hive/esm-shell-app";
+import { HeaderLink } from "@havena/esm-core-components";
+import type { PiletApi } from "@havena/esm-shell-app";
 import * as React from "react";
 import { PropertyChartBanner, PropertyQuickActions } from "./components";
 import { OrganizationContextHeaderLink } from "./components/links";

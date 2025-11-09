@@ -1,4 +1,4 @@
-import { APIFetchResponse } from "@hive/esm-core-api";
+import { APIFetchResponse } from "@havena/esm-core-api";
 import { Amenity } from "../types";
 import useSWR from "swr";
 

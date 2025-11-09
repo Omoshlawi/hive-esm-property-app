@@ -3,7 +3,7 @@ import {
   APIFetchResponse,
   constructUrl,
   mutate,
-} from "@hive/esm-core-api";
+} from "@havena/esm-core-api";
 import { useDebouncedValue } from "@mantine/hooks";
 import { useState } from "react";
 import useSWR from "swr";
@@ -156,7 +156,7 @@ export const useFilteredProperties = () => {
 
   const { data, error, isLoading } = useSWR<
     APIFetchResponse<{ results: Array<Property> }>
-  >(Object.keys(filters ?? {}).length > 0 ? url : null);
+  >(Object.keys(filters ?? {})?.length > 0 ? url : null);
   return {
     isLoading,
     error,

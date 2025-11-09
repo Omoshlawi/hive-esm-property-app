@@ -1,4 +1,4 @@
-import { APIFetchResponse, constructUrl } from "@hive/esm-core-api";
+import { APIFetchResponse, constructUrl } from "@havena/esm-core-api";
 import { RelatedProperty, Relationship } from "../types";
 import useSWR from "swr";
 import { useMemo } from "react";

@@ -12,7 +12,7 @@ import {
   Stack,
   TextInput,
 } from "@mantine/core";
-import { TablerIcon, When } from "@hive/esm-core-components";
+import { TablerIcon, When } from "@havena/esm-core-components";
 
 const PropertyAttributesForm = () => {
   const atrtributeTypesAsync = useAttributeTypes();
@@ -85,7 +85,7 @@ const PropertyAttributesForm = () => {
                 variant="outline"
                 leftSection={<TablerIcon name="plus" />}
                 onClick={() => {
-                  form.setValue(`attributes.${attrs.length}`, {
+                  form.setValue(`attributes.${attrs?.length}`, {
                     attributeId: "",
                     value: "",
                   });

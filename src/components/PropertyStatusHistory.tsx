@@ -1,4 +1,4 @@
-import { StateFullDataTable } from "@hive/esm-core-components";
+import { StateFullDataTable } from "@havena/esm-core-components";
 import { Paper, Title } from "@mantine/core";
 import { ColumnDef } from "@tanstack/react-table";
 import React, { FC } from "react";

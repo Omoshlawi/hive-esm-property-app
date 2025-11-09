@@ -1,4 +1,4 @@
-import { TablerIcon } from "@hive/esm-core-components";
+import { TablerIcon } from "@havena/esm-core-components";
 import { Alert, Group, Text } from "@mantine/core";
 import React from "react";
 

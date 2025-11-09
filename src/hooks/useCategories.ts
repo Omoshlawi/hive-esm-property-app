@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { Category } from "../types";
-import { APIFetchResponse } from "@hive/esm-core-api";
+import { APIFetchResponse } from "@havena/esm-core-api";
 
 const useCategories = () => {
   const path = "/categories";

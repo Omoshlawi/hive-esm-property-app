@@ -1,4 +1,4 @@
-import { handleApiErrors, uploadFiles } from "@hive/esm-core-api";
+import { handleApiErrors, uploadFiles } from "@havena/esm-core-api";
 import { Button, Group, Image, SimpleGrid, Stack, Text } from "@mantine/core";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { showNotification } from "@mantine/notifications";
@@ -58,7 +58,7 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
       // const failed = media.filter((m) => m.status === "rejected");
       // showNotification({
       //   title: `Upload complete`,
-      //   message: `${succesfull.length} out of ${media.length} Uploaded succesfully`,
+      //   message: `${succesfull?.length} out of ${media?.length} Uploaded succesfully`,
       //   color: "green",
       //   position: "top-right",
       // });
@@ -93,14 +93,14 @@ const PropertyGalaryForm: FC<PropertyGalaryFormProps> = ({
       <Group justify="flex-end">
         <Button
           onClick={() => setFiles([])}
-          disabled={files.length === 0 || loading}
+          disabled={files?.length === 0 || loading}
           variant="default"
         >
           Clear
         </Button>
         <Button
           onClick={handleUpload}
-          disabled={files.length === 0 || loading}
+          disabled={files?.length === 0 || loading}
           loading={loading}
         >
           Upload

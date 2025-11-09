@@ -5,7 +5,7 @@ import {
   handleApiErrors,
   mutate,
   uploadFiles,
-} from "@hive/esm-core-api";
+} from "@havena/esm-core-api";
 import { usePropertiesApi } from "../hooks";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -123,15 +123,15 @@ const PropertyMediForm: FC<PropertyMediaFormProps> = ({
     >
       <Stack p={"md"} h={"100%"} justify="space-between">
         <Stack gap={"md"}>
-            <Dropzone
-              accept={IMAGE_MIME_TYPE}
-              onDrop={setFiles}
-              loading={loading}
-              disabled={loading}
-            >
-              <Text ta="center">Drop images here</Text>
-            </Dropzone>
-            <SimpleGrid cols={{ base: 1, sm: 4 }}>{previews}</SimpleGrid>
+          <Dropzone
+            accept={IMAGE_MIME_TYPE}
+            onDrop={setFiles}
+            loading={loading}
+            disabled={loading}
+          >
+            <Text ta="center">Drop images here</Text>
+          </Dropzone>
+          <SimpleGrid cols={{ base: 1, sm: 4 }}>{previews}</SimpleGrid>
           <Controller
             control={form.control}
             name="title"

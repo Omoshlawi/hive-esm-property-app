@@ -7,7 +7,7 @@ import {
   TablerIcon,
   TableSkeleton,
   When,
-} from "@hive/esm-core-components";
+} from "@havena/esm-core-components";
 import { ActionIcon, Button, Group, Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { IconPlus } from "@tabler/icons-react";
@@ -65,7 +65,7 @@ const PropertyRelationshipsPage: React.FC<
       error={(e) => <ErrorState error={e} title={title} />}
       loading={() => <TableSkeleton />}
       success={(relationships) => {
-        if (!relationships.length)
+        if (!relationships?.length)
           return (
             <EmptyState
               onAdd={() => handleAddUpdate()}

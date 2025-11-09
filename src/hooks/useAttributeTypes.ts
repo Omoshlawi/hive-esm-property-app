@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { AttributeType } from "../types";
-import { APIFetchResponse } from "@hive/esm-core-api";
+import { APIFetchResponse } from "@havena/esm-core-api";
 
 const useAttributeTypes = () => {
   const path = "/attribute-types";

@@ -1,4 +1,4 @@
-import { getHiveFileUrl } from "@hive/esm-core-api";
+import { getHiveFileUrl } from "@havena/esm-core-api";
 import {
   ActionIcon,
   Badge,
@@ -21,7 +21,7 @@ import { filesize } from "filesize";
 import React from "react";
 import { PropertyMedia } from "../types";
 import UpdateMediaMetadataForm from "../forms/media/UpdateMediaMetadataForm";
-import { launchWorkspace } from "@hive/esm-core-components";
+import { launchWorkspace } from "@havena/esm-core-components";
 
 type MediaGridViewProps = {
   media: Array<PropertyMedia>;

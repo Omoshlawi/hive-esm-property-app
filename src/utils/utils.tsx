@@ -2,7 +2,7 @@ import { openConfirmModal } from "@mantine/modals";
 import React from "react";
 import { Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { handleApiErrors } from "@hive/esm-core-api";
+import { handleApiErrors } from "@havena/esm-core-api";
 
 export const confirmDelete = (
   resource: string,
