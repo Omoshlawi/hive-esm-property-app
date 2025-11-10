@@ -9,11 +9,11 @@ export const useProperties = (params?: Record<string, any>) => {
     error: sessionError,
   } = Auth.client.useSession();
   const path = constructUrl("/properties", {
-    organizationContext: session?.activeOrganizationId,
+    organization: session?.activeOrganizationId,
+    ...params,
   });
-  const { data, error, isLoading, mutate } = useSWR<
-    APIFetchResponse<{ results: Property[] }>
-  >(session.activeOrganizationId ? path : null);
+  const { data, error, isLoading, mutate } =
+    useSWR<APIFetchResponse<{ results: Property[] }>>(path);
   return {
     properties: data?.data?.results ?? [],
     isLoading: isLoading || isPending,

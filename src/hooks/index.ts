@@ -8,3 +8,4 @@ export * from "./usePropertiesApi";
 export * from "./useRelationships";
 export { default as useChartCurrentProperty } from "./useChartCurrentProperty";
 export * from "./usePropertyStatusHistory"
+export * from "./useAppColors";

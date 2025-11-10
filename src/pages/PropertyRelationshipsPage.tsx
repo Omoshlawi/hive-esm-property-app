@@ -4,18 +4,19 @@ import {
   EmptyState,
   ErrorState,
   launchWorkspace,
+  StateFullDataTable,
   TablerIcon,
   TableSkeleton,
   When,
 } from "@havena/esm-core-components";
-import { ActionIcon, Button, Group, Text } from "@mantine/core";
+import { ActionIcon, Button, Group, Paper, Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { IconPlus } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import RelationshipForm from "../forms/RelationshipForm";
-import { useRelatedProperties } from "../hooks";
+import { useAppColors, useRelatedProperties } from "../hooks";
 import { RelatedProperty, Relationship } from "../types";
 
 type PropertyRelationshipsPageProps = {};
@@ -25,6 +26,7 @@ const PropertyRelationshipsPage: React.FC<
 > = ({}) => {
   const { propertyId } = useParams<{ propertyId: string }>();
   const relationshipAsync = useRelatedProperties(propertyId);
+  const { bgColor } = useAppColors();
   const handleAddUpdate = (relationship?: Relationship) => {
     const close = launchWorkspace(
       <RelationshipForm
@@ -56,83 +58,26 @@ const PropertyRelationshipsPage: React.FC<
     });
   };
   const title = "Relationships";
+
   return (
-    <When
-      asyncState={{
-        ...relationshipAsync,
-        data: relationshipAsync.relatedProperties,
-      }}
-      error={(e) => <ErrorState error={e} title={title} />}
-      loading={() => <TableSkeleton />}
-      success={(relationships) => {
-        if (!relationships?.length)
-          return (
-            <EmptyState
-              onAdd={() => handleAddUpdate()}
-              title={title}
-              message="Their are no Reationships to display for this property"
-            />
-          );
-        return (
-          <DataTable
-            columns={[
-              ...columns,
-              {
-                id: "actions",
-                header: "Actions",
-                enableSorting: false,
-                enableHiding: false,
-                cell({ row }) {
-                  const relationship = row.original;
-                  return (
-                    <Group>
-                      <ActionIcon
-                        variant="outline"
-                        aria-label="Settings"
-                        color="green"
-                        onClick={() =>
-                          handleAddUpdate(relationship.relationship)
-                        }
-                      >
-                        <TablerIcon
-                          name="edit"
-                          style={{ width: "70%", height: "70%" }}
-                          stroke={1.5}
-                        />
-                      </ActionIcon>
-                      <ActionIcon
-                        variant="outline"
-                        aria-label="Settings"
-                        color="red"
-                        onClick={() => handleDelete(relationship.relationship)}
-                      >
-                        <TablerIcon
-                          name="trash"
-                          style={{ width: "70%", height: "70%" }}
-                          stroke={1.5}
-                        />
-                      </ActionIcon>
-                    </Group>
-                  );
-                },
-              },
-            ]}
-            data={relationships}
-            title={title}
-            withColumnViewOptions
-            renderActions={() => (
-              <Button
-                onClick={() => handleAddUpdate()}
-                leftSection={<IconPlus />}
-                variant="light"
-              >
-                Add
-              </Button>
-            )}
-          />
-        );
-      }}
-    />
+    <Paper bg={bgColor} p={"md"}>
+      <StateFullDataTable
+        {...relationshipAsync}
+        data={relationshipAsync.relatedProperties}
+        columns={columns}
+        title={title}
+        withColumnViewOptions
+        renderActions={() => (
+          <Button
+            onClick={() => handleAddUpdate()}
+            leftSection={<IconPlus />}
+            variant="light"
+          >
+            Add
+          </Button>
+        )}
+      />
+    </Paper>
   );
 };
 export default PropertyRelationshipsPage;
@@ -146,7 +91,7 @@ const columns: ColumnDef<RelatedProperty>[] = [
       const linkToChart = `/dashboard/properties/${propertyId}`;
       return (
         <Button
-          component={Link}
+          component={Link as any}
           to={linkToChart}
           variant="transparent"
           p={0}

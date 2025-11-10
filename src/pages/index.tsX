@@ -24,13 +24,13 @@ export const PropertiesDashboard = withRequireAuth(
 );
 export const PropertyDetail = withRequireAuth(PropertyDetailPage);
 export const PropertyRelationships = withRequireAuth(
-  withNoOrganizationContextRequired(PropertyRelationshipsPage),
+  withRequiredOrganizationContext(PropertyRelationshipsPage),
   {
     unauthenticatedAction,
   }
 );
 export const PropertyMedia = withRequireAuth(
-  withNoOrganizationContextRequired(PropertyMediaPage),
+  withRequiredOrganizationContext(PropertyMediaPage),
   {
     unauthenticatedAction,
   }

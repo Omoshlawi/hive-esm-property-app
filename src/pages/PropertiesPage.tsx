@@ -10,32 +10,27 @@ import {
   Badge,
   Box,
   Button,
-  Group,
   Menu,
   Paper,
   Stack,
-  Text,
   useComputedColorScheme,
   useMantineTheme,
 } from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import { Link } from "react-router-dom";
+import AddressFields from "../components/AddressFields";
 import PropertyStatusHistory from "../components/PropertyStatusHistory";
 import PropertyForm from "../forms/PropertyForm";
 import { useProperties, usePropertiesApi } from "../hooks";
 import { Property } from "../types";
-import {
-  formatAddress,
-  getStatusColor,
-  getStatusVariant,
-} from "../utils/helpers";
-import AddressFields from "../components/AddressFields";
+import { getStatusColor, getStatusVariant } from "../utils/helpers";
 import { confirmDelete } from "../utils/utils";
+import { Auth } from "@havena/esm-core-api";
 
 const PropertiesPage: React.FC = () => {
-  const propertiesAsync = useProperties();
+  const { data } = Auth.client.useActiveOrganization();
+  const propertiesAsync = useProperties({ organization: data?.id });
   const { deleteProperty } = usePropertiesApi();
   const colorScheme = useComputedColorScheme();
   const theme = useMantineTheme();
@@ -180,7 +175,7 @@ const columns: ColumnDef<Property>[] = [
       const linkToChart = `/dashboard/properties/${property.id}`;
       return (
         <Button
-          component={Link}
+          component={Link as any}
           to={linkToChart}
           variant="transparent"
           p={0}

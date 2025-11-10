@@ -25,7 +25,7 @@ const PropertyThumbnail: FC<Props> = ({ property }) => {
   if (property.thumbnail)
     return (
       <Image
-        src={getHiveFileUrl(property.thumbnail)}
+        src={property.thumbnail}
         alt={property.name}
         width={120}
         height={420}

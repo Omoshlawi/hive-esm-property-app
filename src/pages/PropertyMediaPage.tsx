@@ -12,6 +12,7 @@ import {
   Center,
   Group,
   Image,
+  Paper,
   Text,
 } from "@mantine/core";
 import { closeModal, openConfirmModal, openModal } from "@mantine/modals";
@@ -23,7 +24,7 @@ import { useParams } from "react-router-dom";
 import MediaGridView from "../components/MediaGridView";
 import PropertyGalaryForm from "../forms/media/PropertyGalaryForm";
 import UpdateMediaMetadataForm from "../forms/media/UpdateMediaMetadataForm";
-import { usePropertyMedia } from "../hooks";
+import { useAppColors, usePropertyMedia } from "../hooks";
 import { PropertyMedia } from "../types";
 type PropertyMediaPageProps = {};
 
@@ -31,7 +32,7 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = () => {
   const { propertyId } = useParams<{ propertyId: string }>();
   const propertyMediaAsync = usePropertyMedia(propertyId, "IMAGE");
   const title = "Property Media";
-
+  const { bgColor } = useAppColors();
   const handleAdd = () => {
     const modalId = openModal({
       title: "Upload Property Images",
@@ -73,77 +74,79 @@ const PropertyMediaPage: React.FC<PropertyMediaPageProps> = () => {
   };
 
   return (
-    <StateFullDataTable
-      defaultView="grid"
-      columns={[
-        ...columns,
-        {
-          id: "actions",
-          header: "Actions",
-          cell({ row }) {
-            const property = row.original;
-            return (
-              <Group>
-                <ActionIcon
-                  variant="outline"
-                  aria-label="edit"
-                  color="teal"
-                  onClick={() => handleUpdate(property)}
-                >
-                  <TablerIcon
-                    name="edit"
-                    style={{ width: "70%", height: "70%" }}
-                    stroke={1.5}
-                  />
-                </ActionIcon>
-                <ActionIcon
-                  variant="outline"
-                  aria-label="Settings"
-                  color="red"
-                  onClick={() => handleDelete(property)}
-                >
-                  <TablerIcon
-                    name="trash"
-                    style={{ width: "70%", height: "70%" }}
-                    stroke={1.5}
-                  />
-                </ActionIcon>
-              </Group>
-            );
+    <Paper bg={bgColor} p={"md"}>
+      <StateFullDataTable
+        defaultView="grid"
+        columns={[
+          ...columns,
+          {
+            id: "actions",
+            header: "Actions",
+            cell({ row }) {
+              const property = row.original;
+              return (
+                <Group>
+                  <ActionIcon
+                    variant="outline"
+                    aria-label="edit"
+                    color="teal"
+                    onClick={() => handleUpdate(property)}
+                  >
+                    <TablerIcon
+                      name="edit"
+                      style={{ width: "70%", height: "70%" }}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
+                  <ActionIcon
+                    variant="outline"
+                    aria-label="Settings"
+                    color="red"
+                    onClick={() => handleDelete(property)}
+                  >
+                    <TablerIcon
+                      name="trash"
+                      style={{ width: "70%", height: "70%" }}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
+                </Group>
+              );
+            },
           },
-        },
-      ]}
-      {...propertyMediaAsync}
-      data={propertyMediaAsync.propertyMedia}
-      title={title}
-      withColumnViewOptions
-      onAdd={() => handleAdd()}
-      renderActions={() => (
-        <Button
-          leftSection={<IconTrash size={16} />}
-          variant="light"
-          color="red"
-        >
-          Delete
-        </Button>
-      )}
-      views={{
-        grid: (table) => <MediaGridView media={table.options.data} />,
-      }}
-      renderViewTabItem={(view) => {
-        if (view === "table")
+        ]}
+        {...propertyMediaAsync}
+        data={propertyMediaAsync.propertyMedia}
+        title={title}
+        withColumnViewOptions
+        onAdd={() => handleAdd()}
+        renderActions={() => (
+          <Button
+            leftSection={<IconTrash size={16} />}
+            variant="light"
+            color="red"
+          >
+            Delete
+          </Button>
+        )}
+        views={{
+          grid: (table) => <MediaGridView media={table.options.data} />,
+        }}
+        renderViewTabItem={(view) => {
+          if (view === "table")
+            return (
+              <Center>
+                <TablerIcon name="layoutList" />
+              </Center>
+            );
           return (
             <Center>
-              <TablerIcon name="layoutList" />
+              <TablerIcon name="layoutGrid" />
             </Center>
           );
-        return (
-          <Center>
-            <TablerIcon name="layoutGrid" />
-          </Center>
-        );
-      }}
-    />
+        }}
+      />
+    </Paper>
   );
 };
 

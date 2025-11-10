@@ -17,10 +17,7 @@ export const useRelationships = (filters?: Record<string, any>) => {
 };
 
 export const useRelatedProperties = (propertyId: string) => {
-  const url = constructUrl("/relationships", {
-    propertyId,
-    v: "custom:include(propertyA,propertyB,type)",
-  });
+  const url = constructUrl(`/properties/${propertyId}/relationships`, {});
   const { data, error, isLoading, mutate } =
     useSWR<APIFetchResponse<{ results: Array<Relationship> }>>(url);
 
